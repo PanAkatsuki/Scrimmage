@@ -42,8 +42,10 @@ void GameScene::Enter()
 	small_platform_3.shape.left = small_platform_3.render_position.x + 40;
 	small_platform_3.shape.right = small_platform_3.render_position.x + small_platform_3.img->getwidth() - 40;
 
-	player_1->SetPosition(100, 100);
-	player_2->SetPosition(600, 100);
+	player_1->SetSize(96, 96);
+	player_2->SetSize(96, 96);
+	player_1->SetPosition(200, 100);
+	player_2->SetPosition(700, 100);
 }
 void GameScene::Input(ExMessage& msg)
 {

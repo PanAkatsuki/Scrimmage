@@ -12,11 +12,11 @@ private:
 	Vector2 pos;
 	Timer timerShake;
 	bool isShaking;
-	float shakingStrength;
+	int shakingStrength;
 public:
 	Vector2 GetPos() const;
 	void Reset();
 	void Update(int& delta);
 
-	void Shake(float strength, int duration);
+	void Shake(int strength, int duration);
 };

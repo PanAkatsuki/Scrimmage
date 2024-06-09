@@ -37,9 +37,6 @@ int main()
 	gameScene = new GameScene();
 	selectorScene = new SelectorScene();
 
-	Atlas AtlasPeashooterIdleRight;
-	AtlasPeashooterIdleRight.LoadFromFile(_T("resources/peashooter_idle_%d.png"), 9);
-
 	sceneManager.SetCurrentScene(menuScene);
 
 	menuScene->Enter();
@@ -55,7 +52,7 @@ int main()
 		}
 
 		// Update data
-		sceneManager.Update(15);
+		sceneManager.Update(1);
 
 		// Draw
 		cleardevice();
@@ -72,4 +69,5 @@ int main()
 	}
 
 	EndBatchDraw();
+
 }

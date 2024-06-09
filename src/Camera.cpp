@@ -31,7 +31,7 @@ void Camera::Reset()
 void Camera::Update(int& delta)
 {
 	/*
-	float deltaf = (float)delta;
+	int deltaf = delta;
 	Vector2 speed;
 	speed.x = -0.1f;
 	speed.y = -0.0f;
@@ -47,7 +47,7 @@ void Camera::Update(int& delta)
 	}
 }
 
-void Camera::Shake(float strength, int duration)
+void Camera::Shake(int strength, int duration)
 {
 	isShaking = true;
 	shakingStrength = strength;

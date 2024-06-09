@@ -9,7 +9,7 @@ Vector2::~Vector2()
 {
 
 }
-Vector2::Vector2(float x, float y)
+Vector2::Vector2(int x, int y)
 	: x(x), y(y)
 {
 
@@ -20,13 +20,13 @@ void Vector2::Init()
 	x = 0;
 	y = 0;
 }
-float Vector2::Length() const
+int Vector2::Length() const
 {
 	return sqrt(x * x + y * y);
 }
 Vector2 Vector2::Normalize() const
 {
-	float len = Length();
+	int len = Length();
 
 	if (len == 0)
 	{
@@ -53,15 +53,15 @@ void Vector2::MinusVec(Vector2& vec)
 	x -= vec.x;
 	y -= vec.y;
 }
-Vector2 Vector2::V2MultiVal(float& val)
+Vector2 Vector2::V2MultiVal(int& val)
 {
 	return Vector2(x * val, y * val);
 }
-float Vector2::SumMultiVec(Vector2& vec)
+int Vector2::SumMultiVec(Vector2& vec)
 {
 	return x * vec.x + y * vec.y;
 }
-void Vector2::MultiVal(float& val)
+void Vector2::MultiVal(int& val)
 {
 	x *= val;
 	y *= val;

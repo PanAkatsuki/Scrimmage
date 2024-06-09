@@ -7,10 +7,10 @@ void SelectorScene::Enter()
 	animationSunflowerLeft.SetAtlas(&atlasSunflowerIdleLeft);
 	animationSunflowerRight.SetAtlas(&atlasSunflowerIdleRight);
 
-	animationPeashooterLeft.SetInterval(100);
-	animationPeashooterRight.SetInterval(100);
-	animationSunflowerLeft.SetInterval(100);
-	animationSunflowerRight.SetInterval(100);
+	animationPeashooterLeft.SetInterval(6);
+	animationPeashooterRight.SetInterval(6);
+	animationSunflowerLeft.SetInterval(6);
+	animationSunflowerRight.SetInterval(6);
 
 	static const int OFFSET_X = 50;
 

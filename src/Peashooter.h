@@ -19,10 +19,10 @@ public:
 		animation_run_left.SetAtlas(&atlasPeashooterRunLeft);
 		animation_run_right.SetAtlas(&atlasPeashooterRunRight);
 
-		animation_idel_left.SetInterval(100);
-		animation_idel_right.SetInterval(100);
-		animation_run_left.SetInterval(100);
-		animation_run_right.SetInterval(100);
+		animation_idel_left.SetInterval(6);
+		animation_idel_right.SetInterval(6);
+		animation_run_left.SetInterval(6);
+		animation_run_right.SetInterval(6);
 	}
 	~Peashooter() = default;
 private:
