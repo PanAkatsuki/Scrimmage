@@ -26,7 +26,7 @@ void Atlas::Clear()
 }
 int Atlas::GetSize()
 {
-	return imgList.size();
+	return (int)imgList.size();
 }
 IMAGE* Atlas::GetImage(int idx)
 {

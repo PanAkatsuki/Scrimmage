@@ -9,18 +9,18 @@
 class Animation
 {
 public:
-	Animation();
-	~Animation();
+	Animation() = default;
+	~Animation() = default;
 private:
-	int timer;
-	int interval;
-	int idxFrame;
-	bool isLoop;
-	Atlas* atlas;
-
-	std::function<void()> callBack;
+	int timer = 0;
+	int interval = 0;
+	int idxFrame = 0;
+	bool isLoop = true;
+	Atlas* atlas = nullptr;
+	std::function<void()> callBack = nullptr;
 public:
 	void Reset();
+
 	void SetAtlas(Atlas* atlasNew);
 	void SetLoop(bool flag);
 	void SetInterval(int ms);
@@ -29,6 +29,5 @@ public:
 	bool CheckFinished();
 	void Update(int delta);
 	void Draw(Camera& camera, int x, int y) const;
-
 	void SetCallBack(std::function<void()> callBack);
 };

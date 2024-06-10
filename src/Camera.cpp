@@ -42,8 +42,8 @@ void Camera::Update(int& delta)
 	timerShake.Update(delta);
 	if (isShaking)
 	{
-		pos.x = (-50 + rand() % 100) / 50.0f * shakingStrength;
-		pos.y = (-50 + rand() % 100) / 50.0f * shakingStrength;
+		pos.x = (-50 + rand() % 100) / 50 * shakingStrength;
+		pos.y = (-50 + rand() % 100) / 50 * shakingStrength;
 	}
 }
 

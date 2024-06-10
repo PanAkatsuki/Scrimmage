@@ -1,20 +1,8 @@
 #include "Animation.h"
 
-Animation::Animation()
-{
-	timer = 0;
-	interval = 0;
-	idxFrame = 0;
-	isLoop = true;
-	atlas = nullptr;
-}
-Animation::~Animation()
-{
-
-}
-
 void Animation::Reset()
 {
+	// Default
 	timer = 0;
 	interval = 0;
 	idxFrame = 0;

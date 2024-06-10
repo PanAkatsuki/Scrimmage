@@ -22,7 +22,7 @@ void Vector2::Init()
 }
 int Vector2::Length() const
 {
-	return sqrt(x * x + y * y);
+	return (int)sqrt(x * x + y * y);
 }
 Vector2 Vector2::Normalize() const
 {

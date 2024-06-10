@@ -41,7 +41,7 @@ protected:
 	// Update
 	Vector2 velocity = { 0, 0 };
 protected:
-
+	// Animation
 	Animation animation_idel_left;
 	Animation animation_idel_right;
 	Animation animation_run_left;
