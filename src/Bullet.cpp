@@ -49,7 +49,7 @@ bool Bullet::GetCanRemove() const
 {
 	return can_remove;
 }
-void Bullet::SetTargetID(PlayerID& id)
+void Bullet::SetTargetID(PlayerID id)
 {
 	target_id = id;
 }

@@ -4,6 +4,8 @@
 
 #include "Player.h"
 
+#include "PeaBullet.h"
+
 extern Atlas atlasPeashooterIdleLeft;
 extern Atlas atlasPeashooterIdleRight;
 extern Atlas atlasPeashooterRunLeft;
@@ -12,21 +14,22 @@ extern Atlas atlasPeashooterRunRight;
 class Peashooter : public Player
 {
 public:
-	Peashooter()
-	{
-		animation_idel_left.SetAtlas(&atlasPeashooterIdleLeft);
-		animation_idel_right.SetAtlas(&atlasPeashooterIdleRight);
-		animation_run_left.SetAtlas(&atlasPeashooterRunLeft);
-		animation_run_right.SetAtlas(&atlasPeashooterRunRight);
-
-		animation_idel_left.SetInterval(6);
-		animation_idel_right.SetInterval(6);
-		animation_run_left.SetInterval(6);
-		animation_run_right.SetInterval(6);
-	}
+	Peashooter();
 	~Peashooter() = default;
 private:
+	int speed_pea = 8;
+	int speed_pea_ex = 12;
 
+	const int attack_ex_duration = 120;
+private:
+	Timer timer_attack_ex;
+	Timer timer_spwan_pea_ex;
 public:
 	void Update(int delta);
+	//void Draw(Camera& camera);
+public:
+	void Attack();
+	void AttackEX();
+private:
+	void SpawnPeaBullet(int& speed);
 };

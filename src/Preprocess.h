@@ -90,6 +90,8 @@ std::vector<Platform> platform_list;
 Player* player_1 = nullptr;
 Player* player_2 = nullptr;
 
+std::vector<Bullet*> bullet_list;
+
 inline void FlipAtlas(Atlas& src, Atlas& dst)
 {
 	dst.Clear();

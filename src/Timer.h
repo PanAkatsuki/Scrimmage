@@ -9,9 +9,10 @@ public:
 	~Timer() = default;
 private:
 	int passTime = 0;
+	bool shotted = false;
+
 	int waitTime = 0;
 	bool paused = false;
-	bool shotted = false;
 	bool oneShot = false;
 public:
 
@@ -26,5 +27,5 @@ public:
 	void Pause();
 	void Resume();
 
-	void Update(int delta);
+	void Update(int& delta);
 };

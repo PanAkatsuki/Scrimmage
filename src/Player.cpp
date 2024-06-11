@@ -1,4 +1,18 @@
 #include "Player.h"
+// Constructor
+Player::Player()
+{
+	current_animation = &animation_idel_left;
+
+	timer_attack_cd.SetWaitTime(attack_cd);
+	timer_attack_cd.SetOneShot(true);
+	timer_attack_cd.SetCallback(
+		[&]()
+		{
+			can_attack = true;
+		}
+	);
+}
 
 void Player::Input(ExMessage& msg)
 {
@@ -19,6 +33,24 @@ void Player::Input(ExMessage& msg)
 			case 0x57: // 'W'
 				is_up_key_down = true;
 				break;
+			case 0x53: // 'S'
+				is_down_key_down = true;
+				break;	
+			case 0x46: // 'F'
+				if (can_attack)
+				{
+					Attack();
+					can_attack = false;
+					timer_attack_cd.Restart();
+				}
+				break;
+			case 0x47: // 'G'
+				if (mp >= 100)
+				{
+					AttackEX();
+					mp = 0;
+				}
+				break;
 			default:
 				break;
 			}
@@ -33,7 +65,25 @@ void Player::Input(ExMessage& msg)
 				is_right_key_down = true;
 				break;
 			case VK_UP: // 'ª'
-				is_up_key_down = true;
+				is_up_key_down = false;
+				break;
+			case VK_DOWN: // '«'
+				is_down_key_down = true;
+				break;
+			case VK_OEM_PERIOD: // '.'
+				if (can_attack)
+				{
+					Attack();
+					can_attack = false;
+					timer_attack_cd.Restart();
+				}
+				break;
+			case VK_OEM_2: // '/'
+				if (mp >= 100)
+				{
+					AttackEX();
+					mp = 0;
+				}
 				break;
 			default:
 				break;
@@ -58,6 +108,9 @@ void Player::Input(ExMessage& msg)
 			case 0x57: // 'W'
 				is_up_key_down = false;
 				break;
+			case 0x53: // 'S'
+				is_down_key_down = false;
+				break;
 			default:
 				break;
 			}
@@ -74,6 +127,9 @@ void Player::Input(ExMessage& msg)
 			case VK_UP: // 'ª'
 				is_up_key_down = false;
 				break;
+			case VK_DOWN: // '«'
+				is_down_key_down = false;
+				break;
 			default:
 				break;
 			}
@@ -88,11 +144,15 @@ void Player::Input(ExMessage& msg)
 }
 void Player::Update(int delta)
 {
-	run(delta);
-	jump(delta);
 	Gravity(delta);
 
+	Run(delta);
+	Jump();
+	Down();
+
 	current_animation->Update(delta);
+
+	timer_attack_cd.Update(delta);
 }
 void Player::Draw(Camera& camera)
 {
@@ -109,13 +169,21 @@ void Player::Draw(Camera& camera)
 	if (is_debug)
 	{
 		settextcolor(RGB(255, 0, 0));
-		if(is_standing)
+		if (is_standing)
 		{
-			outtextxy(position.x, position.y - 20, _T("is_standing = true"));
+			outtextxy(position.x, position.y - 50, _T("is_standing = true"));
 		}
 		else if (!is_standing)
 		{
-			outtextxy(position.x, position.y - 20, _T("is_standing = false"));
+			outtextxy(position.x, position.y - 50, _T("is_standing = false"));
+		}
+		if(can_jump)
+		{
+			outtextxy(position.x, position.y - 30, _T("can_jump = true"));
+		}
+		else if (!can_jump)
+		{
+			outtextxy(position.x, position.y - 30, _T("can_jump = false"));
 		}
 	}
 }
@@ -156,31 +224,7 @@ Vector2 Player::GetVelocity() const
 {
 	return this->velocity;
 }
-void Player::run(int delta)
-{
-	int direction = is_right_key_down - is_left_key_down;
 
-	if (direction != 0)
-	{
-		is_facing_right = (direction > 0);
-		current_animation = is_facing_right ? &animation_run_right : &animation_run_left;
-		velocity.x = direction * run_speed * delta;
-	}
-	else
-	{
-		current_animation = is_facing_right ? &animation_idel_right : &animation_idel_left;
-		velocity.x = 0;
-	}
-	position.x += velocity.x;
-}
-void Player::jump(int delta)
-{
-	if(is_standing && is_up_key_down)
-	{
-		velocity.y += jump_speed;
-		is_standing = false;
-	}
-}
 void Player::Gravity(int delta)
 {
 	is_standing = false;
@@ -202,10 +246,62 @@ void Player::Gravity(int delta)
 					position.y = shape.y - size.y;
 					velocity.y = 0;
 					is_standing = true;
-					is_double_jump = false;
 					break;
 				}
 			}
 		}
 	}
+}
+
+void Player::Run(int delta)
+{
+	if (is_attack_ex)
+	{
+		return;
+	}
+
+	int direction = is_right_key_down - is_left_key_down;
+
+	if (direction != 0)
+	{
+		is_facing_right = (direction > 0);
+		current_animation = is_facing_right ? &animation_run_right : &animation_run_left;
+		velocity.x = direction * run_speed * delta;
+	}
+	else
+	{
+		current_animation = is_facing_right ? &animation_idel_right : &animation_idel_left;
+		velocity.x = 0;
+	}
+	position.x += velocity.x;
+}
+void Player::Jump()
+{
+	if (is_attack_ex)
+	{
+		return;
+	}
+	if (is_up_key_down && is_standing && can_jump)
+	{
+		velocity.y += jump_speed;
+	}
+}
+void Player::Down()
+{
+	for(size_t i = 1; i < platform_list.size(); i++)
+	{
+		if (is_down_key_down && is_standing && position.y + size.y == platform_list[i].shape.y)
+		{
+			position.y += gravity;
+		}
+	}
+}
+
+void Player::Attack()
+{
+
+}
+void Player::AttackEX()
+{
+
 }

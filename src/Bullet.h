@@ -35,7 +35,7 @@ public:
 	bool GetValid() const;
 	void SetCanRemove(bool flag);
 	bool GetCanRemove() const;
-	void SetTargetID(PlayerID& id);
+	void SetTargetID(PlayerID id);
 	PlayerID GetTargetID() const;
 	void SetCallback(std::function<void()> callback);
 public:

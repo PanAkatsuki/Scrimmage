@@ -35,7 +35,7 @@ void Timer::Resume()
 	paused = false;
 }
 
-void Timer::Update(int delta)
+void Timer::Update(int& delta)
 {
 	if (paused)
 	{

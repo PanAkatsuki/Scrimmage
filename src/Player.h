@@ -6,33 +6,47 @@
 #include "Animation.h"
 #include "Camera.h"
 #include "Platform.h"
+#include "Bullet.h"
 
 #include "Player_id.h"
 
 extern std::vector<Platform> platform_list;
+extern std::vector<Bullet*> bullet_list;
 
 class Player
 {
 public:
-	Player()
-	{
-		current_animation = &animation_idel_left;
-	}
+	Player();
 	~Player() = default;
-private:
+protected:
 	bool is_left_key_down = false;
 	bool is_right_key_down = false;
 	bool is_up_key_down = false;
+	bool is_down_key_down = false;
 
 	bool is_facing_right = true;
+
+
 	bool is_standing = false;
-	bool is_double_jump = false;
+	bool can_jump = true;
+
+	bool can_double_jump = false;
+
+	bool can_attack = true;
+	int attack_cd = 30;
+	Timer timer_attack_cd;
+
+	bool is_attack_ex = false;
 
 	Animation* current_animation = nullptr;
 protected:
 	int gravity = 1;
+
 	int run_speed = 5;
 	int jump_speed = -20;
+
+	int hp = 100;
+	int mp = 0;
 
 	PlayerID id = PlayerID::P1;
 	Vector2 size = { 0, 0 };
@@ -62,7 +76,12 @@ public:
 	Vector2 GetPosition() const;
 	Vector2 GetVelocity() const;
 public:
-	virtual void run(int delta);
-	virtual void jump(int delta);
-	virtual void Gravity(int delta);
+	virtual void Gravity(int delta); // is_standing
+
+	virtual void Run(int delta);
+	virtual void Jump();
+	virtual void Down();
+
+	virtual void Attack();
+	virtual void AttackEX();
 };
