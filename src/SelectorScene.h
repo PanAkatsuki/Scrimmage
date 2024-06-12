@@ -8,7 +8,7 @@
 #include "Sunflower.h"
 #include "Player_id.h"
 
-#include "Util.h"
+#include "PutImageAlpha.h"
 #include "Global.h"
 
 extern IMAGE imgSelectorBackground;
@@ -45,7 +45,7 @@ extern Atlas atlasSunflowerIdleRight;
 extern IMAGE imgAvatarPeashooter;
 extern IMAGE imgAvatarSunflower;
 
-extern SceneManager sceneManager;
+extern SceneManager scene_manager;
 
 extern Player* player_1;
 extern Player* player_2;

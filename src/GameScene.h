@@ -8,8 +8,6 @@
 #include "Platform.h"
 #include "Player.h"
 
-#include "Util.h"
-
 extern IMAGE imgSky;
 extern IMAGE imgHills;
 extern IMAGE imgPlatformLarge;
@@ -18,7 +16,7 @@ extern IMAGE imgPlatformSmall;
 extern Camera camera;
 extern std::vector<Platform> platform_list;
 
-extern SceneManager sceneManager;
+extern SceneManager scene_manager;
 
 extern Player* player_1;
 extern Player* player_2;

@@ -6,7 +6,7 @@
 extern Atlas atlasSun;
 extern Atlas atlasSunExplode;
 
-extern Camera  camera;
+extern Camera camera;
 
 class SunBullet : public Bullet
 {

@@ -3,28 +3,32 @@
 #include "Scene.h"
 
 extern Scene* menuScene;
-extern Scene* gameScene;
 extern Scene* selectorScene;
+extern Scene* gameScene;
 
 class SceneManager
 {
 public:
-	enum class sceneType
+	SceneManager() = default;
+	~SceneManager() = default;
+public:
+	enum class SceneType
 	{
 		Menu,
-		Game,
-		Selector
+		Selector,
+		Game
 	};
 private:
-	Scene* currentScene;
+	Scene* current_scene = nullptr;
 public:
-	SceneManager();
-	~SceneManager();
-
+	// Default
 	void Input(ExMessage& msg);
 	void Update(int delta);
 	void Draw(Camera& camera) const;
-
+public:
+	// Set
 	void SetCurrentScene(Scene* scene);
-	void SwitchTo(SceneManager::sceneType type);
+
+	// Switch
+	void SwitchTo(SceneManager::SceneType type);
 };

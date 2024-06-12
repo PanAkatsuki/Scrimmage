@@ -4,7 +4,7 @@
 
 #include "Atlas.h"
 
-#include "Util.h"
+#include "PutImageAlpha.h"
 
 class Animation
 {
@@ -12,22 +12,33 @@ public:
 	Animation() = default;
 	~Animation() = default;
 private:
-	int timer = 0;
-	int interval = 0;
-	int idxFrame = 0;
-	bool isLoop = true;
+	// Set
 	Atlas* atlas = nullptr;
+	int interval = 0;
+	bool is_loop = true;
 	std::function<void()> callBack = nullptr;
-public:
-	void Reset();
 
-	void SetAtlas(Atlas* atlasNew);
-	void SetLoop(bool flag);
+	// Reset
+	int timer = 0;
+	int idx_frame = 0;
+public:
+	// Default
+	void Update(int& delta);
+	void Draw(Camera& camera, int x, int y) const;
+public:
+	// Set
+	void SetAtlas(Atlas* atlas);
 	void SetInterval(int ms);
+	void SetLoop(bool flag);
+	void SetCallBack(std::function<void()> callBack);
+
+	// Get
 	int GetIdxFrame() const;
 	IMAGE* GetFrame() const;
+	
+	// Reset
+	void Reset();
+	
+	// Check
 	bool CheckFinished();
-	void Update(int delta);
-	void Draw(Camera& camera, int x, int y) const;
-	void SetCallBack(std::function<void()> callBack);
 };

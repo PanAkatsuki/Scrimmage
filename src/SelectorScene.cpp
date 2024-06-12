@@ -103,7 +103,7 @@ void SelectorScene::Input(ExMessage& msg)
 			break;
 		case VK_RETURN:
 			mciSendStringW(_T("play ui_confirm from 0"), NULL, 0, NULL);
-			sceneManager.SwitchTo(SceneManager::sceneType::Game);
+			scene_manager.SwitchTo(SceneManager::SceneType::Game);
 			break;
 		default:
 			break;
@@ -227,6 +227,8 @@ void SelectorScene::Draw(Camera& camera)
 }
 void SelectorScene::Exit()
 {
+	mciSendStringW(_T("stop bgm_menu"), NULL, 0, NULL);
+
 	switch (player_type_1)
 	{
 	case SelectorScene::playerType::Peashooter:

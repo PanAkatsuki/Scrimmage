@@ -10,6 +10,8 @@
 
 #include "Player_id.h"
 
+#include "DebugLine.h"
+
 extern std::vector<Platform> platform_list;
 extern std::vector<Bullet*> bullet_list;
 
@@ -25,7 +27,6 @@ protected:
 	bool is_down_key_down = false;
 
 	bool is_facing_right = true;
-
 
 	bool is_standing = false;
 	bool can_jump = true;
@@ -60,6 +61,8 @@ protected:
 	Animation animation_idel_right;
 	Animation animation_run_left;
 	Animation animation_run_right;
+	Animation animation_attack_ex_left;
+	Animation animation_attack_ex_right;
 public:
 	virtual void Input(ExMessage& msg);
 	virtual void Update(int delta);

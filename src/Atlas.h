@@ -7,14 +7,18 @@
 class Atlas
 {
 public:
-	Atlas();
-	~Atlas();
+	Atlas() = default;
+	~Atlas() = default;
 private:
-	std::vector<IMAGE> imgList;
+	// Container
+	std::vector<IMAGE> img_list;
 public:
+	// Modifiers
 	void LoadFromFile(LPCTSTR filepath, int num);
+	void AddImage(IMAGE& img);
 	void Clear();
+
+	// Get
 	int GetSize();
 	IMAGE* GetImage(int idx);
-	void AddImage(IMAGE& img);
 };

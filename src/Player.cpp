@@ -41,7 +41,7 @@ void Player::Input(ExMessage& msg)
 				{
 					Attack();
 					can_attack = false;
-					timer_attack_cd.Restart();
+					timer_attack_cd.Reset();
 				}
 				break;
 			case 0x47: // 'G'
@@ -65,7 +65,7 @@ void Player::Input(ExMessage& msg)
 				is_right_key_down = true;
 				break;
 			case VK_UP: // 'Å™'
-				is_up_key_down = false;
+				is_up_key_down = true;
 				break;
 			case VK_DOWN: // 'Å´'
 				is_down_key_down = true;
@@ -75,7 +75,7 @@ void Player::Input(ExMessage& msg)
 				{
 					Attack();
 					can_attack = false;
-					timer_attack_cd.Restart();
+					timer_attack_cd.Reset();
 				}
 				break;
 			case VK_OEM_2: // '/'
@@ -147,6 +147,7 @@ void Player::Update(int delta)
 	Gravity(delta);
 
 	Run(delta);
+
 	Jump();
 	Down();
 
@@ -160,30 +161,39 @@ void Player::Draw(Camera& camera)
 
 	if (is_debug)
 	{
-		setlinecolor(RGB(255, 0, 0));
+		settextcolor(RGB(255, 0, 0));
+
 		DebugLine(camera, position.x, position.y, position.x + size.x, position.y);
 		DebugLine(camera, position.x + size.x, position.y, position.x + size.x, position.y + size.y);
 		DebugLine(camera, position.x, position.y + size.y, position.x + size.x, position.y + size.y);
 		DebugLine(camera, position.x, position.y, position.x, position.y + size.y);
-	}
-	if (is_debug)
-	{
-		settextcolor(RGB(255, 0, 0));
-		if (is_standing)
+
+		switch (can_attack)
 		{
+		case true:
+			outtextxy(position.x, position.y - 70, _T("can_attack = true"));
+			break;
+		case false:
+			outtextxy(position.x, position.y - 70, _T("can_attack = false"));
+			break;
+		}
+		switch (is_standing)
+		{
+		case true:
 			outtextxy(position.x, position.y - 50, _T("is_standing = true"));
-		}
-		else if (!is_standing)
-		{
+			break;
+		case false:
 			outtextxy(position.x, position.y - 50, _T("is_standing = false"));
+			break;
 		}
-		if(can_jump)
+		switch (can_jump)
 		{
+		case true:
 			outtextxy(position.x, position.y - 30, _T("can_jump = true"));
-		}
-		else if (!can_jump)
-		{
+			break;
+		case false:
 			outtextxy(position.x, position.y - 30, _T("can_jump = false"));
+			break;
 		}
 	}
 }

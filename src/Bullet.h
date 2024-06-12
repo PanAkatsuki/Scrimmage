@@ -14,15 +14,17 @@ public:
 	Bullet() = default;
 	~Bullet() = default;
 protected:
+	PlayerID target_id = PlayerID::P1;
 	Vector2 size = { 0, 0 };
 	Vector2 position = { 0, 0 };
 	Vector2 velocity = { 0, 0 };
 	int damage = 0;
 	bool valid = true;
 	bool can_remove = false;
-	PlayerID target_id = PlayerID::P1;
 	std::function<void()> callback = nullptr;
 public:
+	void SetTargetID(PlayerID id);
+	PlayerID GetTargetID() const;
 	void SetSize(Vector2& vec);
 	Vector2 GetSize() const;
 	void SetPosition(Vector2& vec);
@@ -35,8 +37,6 @@ public:
 	bool GetValid() const;
 	void SetCanRemove(bool flag);
 	bool GetCanRemove() const;
-	void SetTargetID(PlayerID id);
-	PlayerID GetTargetID() const;
 	void SetCallback(std::function<void()> callback);
 public:
 	void Update(int delta);

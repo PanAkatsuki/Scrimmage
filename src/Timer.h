@@ -8,24 +8,28 @@ public:
 	Timer() = default;
 	~Timer() = default;
 private:
-	int passTime = 0;
-	bool shotted = false;
-
+	// Set
 	int waitTime = 0;
 	bool paused = false;
 	bool oneShot = false;
-public:
-
-private:
 	std::function<void()> callback = nullptr;
+
+	// Reset
+	int passTime = 0;
+	bool shotted = false;
+private:
+	
 public:
-	void Restart();
-	void Init();
+	// Default
+	void Update(int& delta);
+public:
+	// Set
 	void SetWaitTime(int val);
+	void SetPause();
+	void SetContinue();
 	void SetOneShot(bool flag);
 	void SetCallback(std::function<void()> callback);
-	void Pause();
-	void Resume();
 
-	void Update(int& delta);
+	// Reset
+	void Reset();
 };

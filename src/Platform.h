@@ -2,7 +2,8 @@
 
 #include "Camera.h"
 
-#include "Util.h"
+#include "PutImageAlpha.h"
+#include "DebugLine.h"
 
 extern bool is_debug;
 

@@ -2,30 +2,21 @@
 
 #include <graphics.h>
 
-#include <iostream>
-
-#include "Global.h"
-
-#include "Scene.h"
 #include "SceneManager.h"
-
-#include "Atlas.h"
-#include "Animation.h"
-
-#include "Camera.h"
-#include "Timer.h"
 
 extern IMAGE imgMenuBackground;
 
-extern SceneManager sceneManager;
+extern SceneManager scene_manager;
+
+extern Camera camera;
 
 class MenuScene : public Scene
 {
 private:
 
 public:
-	MenuScene();
-	~MenuScene();
+	MenuScene() = default;
+	~MenuScene() = default;
 
 	void Enter();
 	void Input(ExMessage& msg);

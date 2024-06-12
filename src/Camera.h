@@ -7,16 +7,24 @@ class Camera
 {
 public:
 	Camera();
-	~Camera();
+	~Camera() = default;
 private:
-	Vector2 pos;
-	Timer timerShake;
-	bool isShaking;
-	int shakingStrength;
+	// Set
+	Vector2 position = { 0, 0 };
+
+	// Shake
+	Timer timer_shake;
+	bool is_shaking = false;
+	int shaking_strength = 0;
 public:
-	Vector2 GetPos() const;
-	void Reset();
+	// Default
 	void Update(int& delta);
+public:
+	// Set
+	void SetPosition(int x, int y);
+	Vector2 GetPosition() const;
+	void Reset();
+	
 
 	void Shake(int strength, int duration);
 };

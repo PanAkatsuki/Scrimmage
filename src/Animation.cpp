@@ -1,42 +1,77 @@
 #include "Animation.h"
 
-void Animation::Reset()
+// Default
+void Animation::Update(int& delta)
 {
-	// Default
-	timer = 0;
-	interval = 0;
-	idxFrame = 0;
-	isLoop = true;
-	atlas = nullptr;
+	timer += delta;
+	if (timer >= interval)
+	{
+		idx_frame++;
+		timer = 0;
+		if (idx_frame >= atlas->GetSize())
+		{
+			idx_frame = is_loop ? 0 : atlas->GetSize() - 1;
+			if (!is_loop && callBack)
+			{
+				callBack();
+			}
+		}
+	}
 }
-void Animation::SetAtlas(Atlas* atlasNew)
+
+void Animation::Draw(Camera& camera, int x, int y) const
+{
+	PutImageAlpha(camera, x, y, atlas->GetImage(idx_frame));
+}
+
+// Set
+void Animation::SetAtlas(Atlas* atlas)
 {
 	Reset();
-	atlas = atlasNew;
+	this->atlas = atlas;
 }
+
 void Animation::SetLoop(bool flag)
 {
-	isLoop = flag;
+	is_loop = flag;
 }
+
 void Animation::SetInterval(int ms)
 {
 	interval = ms;
 }
+
+void Animation::SetCallBack(std::function<void()> callBack)
+{
+	this->callBack = callBack;
+}
+
+// Get
 int Animation::GetIdxFrame() const
 {
-	return idxFrame;
+	return idx_frame;
 }
+
 IMAGE* Animation::GetFrame() const
 {
-	return atlas->GetImage(idxFrame);
+	return atlas->GetImage(idx_frame);
 }
+
+// Reset
+void Animation::Reset()
+{
+	timer = 0;
+	idx_frame = 0;
+}
+
+// Check
 bool Animation::CheckFinished()
 {
-	if (isLoop)
+	if (is_loop)
 	{
 		return false;
 	}
-	if (idxFrame == atlas->GetSize() - 1)
+	if (idx_frame == atlas->GetSize() - 1)
 	{
 		return true;
 	}
@@ -44,29 +79,4 @@ bool Animation::CheckFinished()
 	{
 		return false;
 	}
-}
-void Animation::Update(int delta)
-{
-	timer += delta;
-	if (timer >= interval)
-	{
-		idxFrame++;
-		timer = 0;
-		if (idxFrame >= atlas->GetSize())
-		{
-			idxFrame = isLoop ? 0 : atlas->GetSize() - 1;
-			if (!isLoop && callBack)
-			{
-				callBack();
-			}
-		}
-	}
-}
-void Animation::Draw(Camera& camera, int x, int y) const
-{
-	PutImageAlpha(camera, x, y, atlas->GetImage(idxFrame));
-}
-void Animation::SetCallBack(std::function<void()> callBack)
-{
-	this->callBack = callBack;
 }

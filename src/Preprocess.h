@@ -3,10 +3,11 @@
 #include <vector>
 
 #include "SceneManager.h"
-#include "Atlas.h"
 
 #include "Platform.h"
 #include "Player.h"
+
+#include "FlipAtlas.h"
 
 IMAGE imgMenuBackground;
 
@@ -83,7 +84,7 @@ Scene* gameScene = nullptr;
 Scene* selectorScene = nullptr;
 
 Camera camera;
-SceneManager sceneManager;
+SceneManager scene_manager;
 
 std::vector<Platform> platform_list;
 
@@ -91,17 +92,6 @@ Player* player_1 = nullptr;
 Player* player_2 = nullptr;
 
 std::vector<Bullet*> bullet_list;
-
-inline void FlipAtlas(Atlas& src, Atlas& dst)
-{
-	dst.Clear();
-	for (int i = 0; i < src.GetSize(); i++)
-	{
-		IMAGE imgFlipped;
-		FlipImage(src.GetImage(i), &imgFlipped);
-		dst.AddImage(imgFlipped);
-	}
-}
 
 inline void LoadGameResource()
 {

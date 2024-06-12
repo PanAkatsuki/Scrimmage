@@ -1,49 +1,45 @@
 #include "SceneManager.h"
 
-SceneManager::SceneManager()
-{
-	currentScene = nullptr;
-}
-SceneManager::~SceneManager()
-{
-
-}
-
+// Default
 void SceneManager::Input(ExMessage& msg)
 {
-	currentScene->Input(msg);
-}
-void SceneManager::Update(int delta)
-{
-	currentScene->Update(delta);
-}
-void SceneManager::Draw(Camera& camera) const
-{
-	currentScene->Draw(camera);
+	current_scene->Input(msg);
 }
 
+void SceneManager::Update(int delta)
+{
+	current_scene->Update(delta);
+}
+
+void SceneManager::Draw(Camera& camera) const
+{
+	current_scene->Draw(camera);
+}
+
+// Set
 void SceneManager::SetCurrentScene(Scene* scene)
 {
-	currentScene = scene;
-	currentScene->Enter();
+	current_scene = scene;
+	current_scene->Enter();
 }
-void SceneManager::SwitchTo(SceneManager::sceneType type)
+
+// Switch
+void SceneManager::SwitchTo(SceneManager::SceneType type)
 {
-	currentScene->Exit();
+	current_scene->Exit();
 	switch (type)
 	{
-	case SceneManager::sceneType::Menu:
-		currentScene = menuScene;
+	case SceneManager::SceneType::Menu:
+		current_scene = menuScene;
 		break;
-	case SceneManager::sceneType::Game:
-		currentScene = gameScene;
+	case SceneManager::SceneType::Game:
+		current_scene = gameScene;
 		break;
-	case SceneManager::sceneType::Selector:
-		currentScene = selectorScene;
+	case SceneManager::SceneType::Selector:
+		current_scene = selectorScene;
 		break;
 	default:
 		break;
 	}
-	currentScene->Enter();
+	current_scene->Enter();
 }
-

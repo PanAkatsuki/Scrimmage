@@ -10,8 +10,6 @@
 #include "GameScene.h"
 #include "SelectorScene.h"
 
-#include "Util.h"
-
 #include "Preprocess.h"
 
 bool is_debug = false;
@@ -37,7 +35,7 @@ int main()
 	gameScene = new GameScene();
 	selectorScene = new SelectorScene();
 
-	sceneManager.SetCurrentScene(menuScene);
+	scene_manager.SetCurrentScene(menuScene);
 
 	menuScene->Enter();
 
@@ -48,15 +46,15 @@ int main()
 		// Process Event
 		while (peekmessage(&msg))
 		{
-			sceneManager.Input(msg);
+			scene_manager.Input(msg);
 		}
 
 		// Update data
-		sceneManager.Update(1);
+		scene_manager.Update(1);
 
 		// Draw
 		cleardevice();
-		sceneManager.Draw(camera);
+		scene_manager.Draw(camera);
 
 		FlushBatchDraw();
 

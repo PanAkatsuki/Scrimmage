@@ -1,42 +1,39 @@
 #include "Atlas.h"
 
-Atlas::Atlas()
-{
-	imgList.clear();
-}
-Atlas::~Atlas()
-{
-
-}
-
+// Modifiers
 void Atlas::LoadFromFile(LPCTSTR filepath, int num)
 {
-	imgList.resize(num);
+	img_list.resize(num);
 
 	TCHAR path[256];
 	for (int i = 0; i < num; i++)
 	{
 		_stprintf_s(path, filepath, i + 1);
-		loadimage(&imgList[i], path, 0, 0, false);
+		loadimage(&img_list[i], path, 0, 0, false);
 	}
 }
+
+void Atlas::AddImage(IMAGE& img)
+{
+	img_list.push_back(img);
+}
+
 void Atlas::Clear()
 {
-	imgList.clear();
+	img_list.clear();
 }
+
+// Get
 int Atlas::GetSize()
 {
-	return (int)imgList.size();
+	return (int)img_list.size();
 }
+
 IMAGE* Atlas::GetImage(int idx)
 {
-	if (idx < 0 || idx >= imgList.size())
+	if (idx < 0 || idx >= img_list.size())
 	{
 		return nullptr;
 	}
-	return &imgList[idx];
-}
-void Atlas::AddImage(IMAGE& img)
-{
-	imgList.push_back(img);
+	return &img_list[idx];
 }

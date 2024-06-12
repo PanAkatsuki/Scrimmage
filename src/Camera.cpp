@@ -1,57 +1,49 @@
 #include "Camera.h"
 
+// Constructor
 Camera::Camera()
 {
-	isShaking = false;
-	shakingStrength = 0;
-	/*
-	timerShake.SetOneShot(true);
-	timerShake.SetCallback([&]()
+	timer_shake.SetCallback(
+		[&]()
 		{
-			isShaking = false;
-			Reset();
+			is_shaking = false;
+			timer_shake.Reset();
+			shaking_strength = 0;
 		}
 	);
-	*/
-}
-Camera::~Camera()
-{
-
 }
 
-Vector2 Camera::GetPos() const
+// Set
+void Camera::SetPosition(int x, int y)
 {
-	return pos;
+	position.x = x;
+	position.y = y;
+}
+
+Vector2 Camera::GetPosition() const
+{
+	return position;
 }
 void Camera::Reset()
 {
-	pos.x = 0;
-	pos.y = 0;
+	position.x = 0;
+	position.y = 0;
 }
 void Camera::Update(int& delta)
 {
-	/*
-	int deltaf = delta;
-	Vector2 speed;
-	speed.x = -0.1f;
-	speed.y = -0.0f;
-	//speed.MultiVal(deltaf);
-	Vector2 tmp = speed.V2MultiVal(deltaf);
-	pos.PlusVec(tmp);
-	*/
-	timerShake.Update(delta);
-	if (isShaking)
+	if (is_shaking)
 	{
-		pos.x = (-50 + rand() % 100) / 50 * shakingStrength;
-		pos.y = (-50 + rand() % 100) / 50 * shakingStrength;
+		timer_shake.Update(delta);
+		position.x = (-50 + rand() % 100) / 50 * shaking_strength;
+		position.y = (-50 + rand() % 100) / 50 * shaking_strength;
 	}
 }
 
 void Camera::Shake(int strength, int duration)
 {
-	isShaking = true;
-	shakingStrength = strength;
+	is_shaking = true;
+	shaking_strength = strength;
 
-	timerShake.SetWaitTime(duration);
-	timerShake.Restart();
+	timer_shake.Reset();
+	timer_shake.SetWaitTime(duration);
 }

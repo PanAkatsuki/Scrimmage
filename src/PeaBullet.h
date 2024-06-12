@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Util.h"
-
 #include "Bullet.h"
 #include "Animation.h"
 
 extern IMAGE imgPea;
 extern Atlas atlasPeaBreak;
+
+extern Camera camera;
 
 class PeaBullet : public Bullet
 {
