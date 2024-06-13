@@ -25,11 +25,10 @@ public:
 public:
 	// Set
 	void SetWaitTime(int val);
-	void SetPause();
-	void SetContinue();
+	void SetPause(bool flag);
 	void SetOneShot(bool flag);
 	void SetCallback(std::function<void()> callback);
 
-	// Reset
-	void Reset();
+	// Restart
+	void Restart();
 };

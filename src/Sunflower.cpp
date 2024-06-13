@@ -2,10 +2,10 @@
 
 Sunflower::Sunflower()
 {
-	animation_idel_left.SetAtlas(&atlasSunflowerIdleLeft);
-	animation_idel_right.SetAtlas(&atlasSunflowerIdleRight);
-	animation_run_left.SetAtlas(&atlasSunflowerIdleLeft);
-	animation_run_right.SetAtlas(&atlasSunflowerIdleRight);
+	animation_idel_left.SetAtlas(&atlas_sunflower_idle_left);
+	animation_idel_right.SetAtlas(&atlas_sunflower_idle_right);
+	animation_run_left.SetAtlas(&atlas_sunflower_idle_left);
+	animation_run_right.SetAtlas(&atlas_sunflower_idle_right);
 	animation_attack_ex_left.SetAtlas(&atlasSunflowerAttackEXLeft);
 	animation_attack_ex_right.SetAtlas(&atlasSunflowerAttackEXRight);
 	animation_sun_text.SetAtlas(&atlasSunText);

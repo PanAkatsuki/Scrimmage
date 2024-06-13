@@ -2,57 +2,59 @@
 
 void SelectorScene::Enter()
 {
-	animationPeashooterLeft.SetAtlas(&atlasPeashooterIdleLeft);
-	animationPeashooterRight.SetAtlas(&atlasPeashooterIdleRight);
-	animationSunflowerLeft.SetAtlas(&atlasSunflowerIdleLeft);
-	animationSunflowerRight.SetAtlas(&atlasSunflowerIdleRight);
+	// Set atlas
+	animation_peashooter_left.SetAtlas(&atlas_peashooter_idle_left);
+	animation_peashooter_right.SetAtlas(&atlas_peashooter_idle_right);
+	animation_sunflower_left.SetAtlas(&atlas_sunflower_idle_left);
+	animation_sunflower_right.SetAtlas(&atlas_sunflower_idle_right);
 
-	animationPeashooterLeft.SetInterval(6);
-	animationPeashooterRight.SetInterval(6);
-	animationSunflowerLeft.SetInterval(6);
-	animationSunflowerRight.SetInterval(6);
+	// Set interval
+	animation_peashooter_left.SetInterval(6);
+	animation_peashooter_right.SetInterval(6);
+	animation_sunflower_left.SetInterval(6);
+	animation_sunflower_right.SetInterval(6);
 
 	static const int OFFSET_X = 50;
 
-	imgVSPos.x = (getwidth() - imgVS.getwidth()) / 2;
-	imgVSPos.y = (getheight() - imgVS.getheight()) / 2;
+	img_vs_position.x = (getwidth() - img_vs.getwidth()) / 2;
+	img_vs_position.y = (getheight() - img_vs.getheight()) / 2;
 
-	imgTipPos.x = (getwidth() - imgSelectorTip.getwidth()) / 2;
-	imgTipPos.y = getheight() - 125;
+	img_tip_position.x = (getwidth() - img_tip.getwidth()) / 2;
+	img_tip_position.y = getheight() - 125;
 
-	img1PPos.x = (getwidth() / 2 - img1P.getwidth()) / 2 - OFFSET_X;
-	img1PPos.y = 35;
-	img2PPos.x = getwidth() / 2 + (getwidth() / 2 - img2P.getwidth()) / 2 + OFFSET_X;
-	img2PPos.y = img1PPos.y;
+	img_1pPos.x = (getwidth() / 2 - img_1p.getwidth()) / 2 - OFFSET_X;
+	img_1pPos.y = 35;
+	img_2pPos.x = getwidth() / 2 + (getwidth() / 2 - img_2p.getwidth()) / 2 + OFFSET_X;
+	img_2pPos.y = img_1pPos.y;
 
-	img1PDescPos.x = (getwidth() / 2 - img1PDesc.getwidth()) / 2 - OFFSET_X;
-	img1PDescPos.y = getheight() - 150;
-	img2PDescPos.x = getwidth() / 2 + (getwidth() / 2 - img2PDesc.getwidth()) / 2 + OFFSET_X;
-	img2PDescPos.y = img1PDescPos.y;
+	img_1p_descPos.x = (getwidth() / 2 - img_1p_desc.getwidth()) / 2 - OFFSET_X;
+	img_1p_descPos.y = getheight() - 150;
+	img_2p_descPos.x = getwidth() / 2 + (getwidth() / 2 - img_2p_desc.getwidth()) / 2 + OFFSET_X;
+	img_2p_descPos.y = img_1p_descPos.y;
 
-	img1PGravestonePos.x = (getwidth() / 2 - imgGravestoneRight.getwidth()) / 2 - OFFSET_X;
-	img1PGravestonePos.y = img1PPos.y + img1P.getheight() + 35;
-	img2PGravestonePos.x = getwidth() / 2 + (getwidth() / 2 - imgGravestoneLeft.getwidth()) / 2 + OFFSET_X;
-	img2PGravestonePos.y = img1PGravestonePos.y;
+	img_1pGravestonePos.x = (getwidth() / 2 - img_gravestone_right.getwidth()) / 2 - OFFSET_X;
+	img_1pGravestonePos.y = img_1pPos.y + img_1p.getheight() + 35;
+	img_2pGravestonePos.x = getwidth() / 2 + (getwidth() / 2 - img_gravestone_left.getwidth()) / 2 + OFFSET_X;
+	img_2pGravestonePos.y = img_1pGravestonePos.y;
 
-	animation1PPos.x = (getwidth() / 2 - atlasPeashooterIdleRight.GetImage(0)->getheight()) / 2 - OFFSET_X;
-	animation1PPos.y = img1PGravestonePos.y + 80;
-	animation2PPos.x = getwidth() / 2 + (getwidth() / 2 - atlasPeashooterIdleRight.GetImage(0)->getheight()) / 2 + OFFSET_X;
-	animation2PPos.y = img2PGravestonePos.y + 80;
+	animation1PPos.x = (getwidth() / 2 - atlas_peashooter_idle_right.GetImage(0)->getheight()) / 2 - OFFSET_X;
+	animation1PPos.y = img_1pGravestonePos.y + 80;
+	animation2PPos.x = getwidth() / 2 + (getwidth() / 2 - atlas_peashooter_idle_right.GetImage(0)->getheight()) / 2 + OFFSET_X;
+	animation2PPos.y = img_2pGravestonePos.y + 80;
 
-	img1PNamePos.x = animation1PPos.x + WINDOW_WIDTH / 100;
-	img1PNamePos.y = animation1PPos.y + 155;
-	img2PNamePos.x = animation2PPos.x + WINDOW_WIDTH / 100;
-	img2PNamePos.y = animation2PPos.y + 155;
+	img_1pNamePos.x = animation1PPos.x + WINDOW_WIDTH / 100;
+	img_1pNamePos.y = animation1PPos.y + 155;
+	img_2pNamePos.x = animation2PPos.x + WINDOW_WIDTH / 100;
+	img_2pNamePos.y = animation2PPos.y + 155;
 
-	btn1PSelectorLeft.x = img1PGravestonePos.x - img1PSelectorBtnIdleLeft.getwidth();
-	btn1PSelectorLeft.y = img1PGravestonePos.y + (imgGravestoneRight.getheight() - img1PSelectorBtnIdleLeft.getheight()) / 2;
-	btn1PSelectorRight.x = img1PGravestonePos.x + imgGravestoneRight.getwidth();
+	btn1PSelectorLeft.x = img_1pGravestonePos.x - img_1p_selector_scene_btn_idle_left.getwidth();
+	btn1PSelectorLeft.y = img_1pGravestonePos.y + (img_gravestone_right.getheight() - img_1p_selector_scene_btn_idle_left.getheight()) / 2;
+	btn1PSelectorRight.x = img_1pGravestonePos.x + img_gravestone_right.getwidth();
 	btn1PSelectorRight.y = btn1PSelectorLeft.y;
 
-	btn2PSelectorLeft.x = img2PGravestonePos.x - img2PSelectorBtnIdleLeft.getwidth();
+	btn2PSelectorLeft.x = img_2pGravestonePos.x - img_2p_selector_scene_btn_idle_Left.getwidth();
 	btn2PSelectorLeft.y = btn1PSelectorLeft.y;
-	btn2PSelectorRight.x = img2PGravestonePos.x + imgGravestoneLeft.getwidth();
+	btn2PSelectorRight.x = img_2pGravestonePos.x + img_gravestone_left.getwidth();
 	btn2PSelectorRight.y = btn1PSelectorLeft.y;
 }
 void SelectorScene::Input(ExMessage& msg)
@@ -83,22 +85,22 @@ void SelectorScene::Input(ExMessage& msg)
 		{
 		case 0x41:
 			is_btn_1P_left_down = false;
-			player_type_1 = (playerType)(((int)playerType::Invalid + (int)player_type_1 - 1) % (int)playerType::Invalid);
+			player_type_1 = (PlayerType)(((int)PlayerType::Invalid + (int)player_type_1 - 1) % (int)PlayerType::Invalid);
 			mciSendStringW(_T("play ui_switch from 0"), NULL, 0, NULL);
 			break;
 		case 0x44:
 			is_btn_1P_right_down = false;
-			player_type_1 = (playerType)(((int)playerType::Invalid + (int)player_type_1 + 1) % (int)playerType::Invalid);
+			player_type_1 = (PlayerType)(((int)PlayerType::Invalid + (int)player_type_1 + 1) % (int)PlayerType::Invalid);
 			mciSendStringW(_T("play ui_switch from 0"), NULL, 0, NULL);
 			break;
 		case VK_LEFT:
 			is_btn_2P_left_down = false;
-			player_type_2 = (playerType)(((int)playerType::Invalid + (int)player_type_2 - 1) % (int)playerType::Invalid);
+			player_type_2 = (PlayerType)(((int)PlayerType::Invalid + (int)player_type_2 - 1) % (int)PlayerType::Invalid);
 			mciSendStringW(_T("play ui_switch from 0"), NULL, 0, NULL);
 			break;
 		case VK_RIGHT:
 			is_btn_2P_right_down = false;
-			player_type_2 = (playerType)(((int)playerType::Invalid + (int)player_type_2 + 1) % (int)playerType::Invalid);
+			player_type_2 = (PlayerType)(((int)PlayerType::Invalid + (int)player_type_2 + 1) % (int)PlayerType::Invalid);
 			mciSendStringW(_T("play ui_switch from 0"), NULL, 0, NULL);
 			break;
 		case VK_RETURN:
@@ -115,13 +117,13 @@ void SelectorScene::Input(ExMessage& msg)
 }
 void SelectorScene::Update(int& delta)
 {
-	animationPeashooterLeft.Update(delta);
-	animationPeashooterRight.Update(delta);
-	animationSunflowerLeft.Update(delta);
-	animationSunflowerRight.Update(delta);
+	animation_peashooter_left.Update(delta);
+	animation_peashooter_right.Update(delta);
+	animation_sunflower_left.Update(delta);
+	animation_sunflower_right.Update(delta);
 
 	selector_background_scorll_offset_x += 5;
-	if (selector_background_scorll_offset_x >= imgPeashooterSelectorBackgroundLeft.getwidth())
+	if (selector_background_scorll_offset_x >= img_peashooter_selector_scene_background_left.getwidth())
 	{
 		selector_background_scorll_offset_x = 0;
 	}
@@ -146,11 +148,11 @@ void SelectorScene::Draw(Camera& camera)
 
 	switch (player_type_1)
 	{
-	case SelectorScene::playerType::Peashooter:
-		p_p1_selector_background = &imgPeashooterSelectorBackgroundRight;
+	case SelectorScene::PlayerType::Peashooter:
+		p_p1_selector_background = &img_peashooter_selector_scene_background_Right;
 		break;
-	case SelectorScene::playerType::Sunflower:
-		p_p1_selector_background = &imgSunflowerSelectorBackgroundRight;
+	case SelectorScene::PlayerType::Sunflower:
+		p_p1_selector_background = &img_sunflower_selector_scene_background_Right;
 		break;
 	default:
 		p_p1_selector_background = nullptr;
@@ -158,18 +160,18 @@ void SelectorScene::Draw(Camera& camera)
 	}
 	switch (player_type_2)
 	{
-	case SelectorScene::playerType::Peashooter:
-		p_p2_selector_background = &imgPeashooterSelectorBackgroundLeft;
+	case SelectorScene::PlayerType::Peashooter:
+		p_p2_selector_background = &img_peashooter_selector_scene_background_left;
 		break;
-	case SelectorScene::playerType::Sunflower:
-		p_p2_selector_background = &imgSunflowerSelectorBackgroundLeft;
+	case SelectorScene::PlayerType::Sunflower:
+		p_p2_selector_background = &img_sunflower_selector_scene_background_left;
 		break;
 	default:
 		p_p1_selector_background = nullptr;
 		break;
 	}
 
-	putimage(0, 0, &imgSelectorBackground, SRCCOPY);
+	putimage(0, 0, &img_selector_scene_background, SRCCOPY);
 
 	if(p_p1_selector_background && p_p2_selector_background)
 	{
@@ -181,47 +183,47 @@ void SelectorScene::Draw(Camera& camera)
 		PutImageAlpha(camera, getwidth() - selector_background_scorll_offset_x, 0, p_p2_selector_background);
 	}
 
-	PutImageAlpha(camera, imgVSPos.x, imgVSPos.y, &imgVS);
-	PutImageAlpha(camera, img1PPos.x, img1PPos.y, &img1P);
-	PutImageAlpha(camera, img2PPos.x, img2PPos.y, &img2P);
+	PutImageAlpha(camera, img_vs_position.x, img_vs_position.y, &img_vs);
+	PutImageAlpha(camera, img_1pPos.x, img_1pPos.y, &img_1p);
+	PutImageAlpha(camera, img_2pPos.x, img_2pPos.y, &img_2p);
 
-	PutImageAlpha(camera, img1PDescPos.x, img1PDescPos.y, &img1PDesc);
-	PutImageAlpha(camera, img2PDescPos.x, img2PDescPos.y, &img2PDesc);
+	PutImageAlpha(camera, img_1p_descPos.x, img_1p_descPos.y, &img_1p_desc);
+	PutImageAlpha(camera, img_2p_descPos.x, img_2p_descPos.y, &img_2p_desc);
 
-	PutImageAlpha(camera, img1PGravestonePos.x, img1PGravestonePos.y, &imgGravestoneLeft);
-	PutImageAlpha(camera, img2PGravestonePos.x, img2PGravestonePos.y, &imgGravestoneRight);
+	PutImageAlpha(camera, img_1pGravestonePos.x, img_1pGravestonePos.y, &img_gravestone_left);
+	PutImageAlpha(camera, img_2pGravestonePos.x, img_2pGravestonePos.y, &img_gravestone_right);
 
-	PutImageAlpha(camera, imgTipPos.x, imgTipPos.y, &imgSelectorTip);
+	PutImageAlpha(camera, img_tip_position.x, img_tip_position.y, &img_tip);
 
-	PutImageAlpha(camera, btn1PSelectorLeft.x - btn_offset / WINDOW_WIDTH, btn1PSelectorLeft.y, is_btn_1P_left_down ? &img1PSelectorBtnDownLeft : &img1PSelectorBtnIdleLeft);
-	PutImageAlpha(camera, btn1PSelectorRight.x + btn_offset / WINDOW_WIDTH, btn1PSelectorRight.y, is_btn_1P_right_down ? &img1PSelectorBtnDownRight : &img1PSelectorBtnIdleRight);
-	PutImageAlpha(camera, btn2PSelectorLeft.x - btn_offset / WINDOW_WIDTH, btn2PSelectorLeft.y, is_btn_2P_left_down ? &img2PSelectorBtnDownLeft : &img2PSelectorBtnIdleLeft);
-	PutImageAlpha(camera, btn2PSelectorRight.x + btn_offset / WINDOW_WIDTH, btn2PSelectorRight.y, is_btn_2P_right_down ? &img2PSelectorBtnDownRight : &img2PSelectorBtnIdleRight);
+	PutImageAlpha(camera, btn1PSelectorLeft.x - btn_offset / WINDOW_WIDTH, btn1PSelectorLeft.y, is_btn_1P_left_down ? &img_1p_selector_scene_btn_down_Left : &img_1p_selector_scene_btn_idle_left);
+	PutImageAlpha(camera, btn1PSelectorRight.x + btn_offset / WINDOW_WIDTH, btn1PSelectorRight.y, is_btn_1P_right_down ? &img_1p_selector_scene_btn_down_Right : &img_1p_selector_scene_btn_idle_Right);
+	PutImageAlpha(camera, btn2PSelectorLeft.x - btn_offset / WINDOW_WIDTH, btn2PSelectorLeft.y, is_btn_2P_left_down ? &img_2p_selector_scene_btn_down_Left : &img_2p_selector_scene_btn_idle_Left);
+	PutImageAlpha(camera, btn2PSelectorRight.x + btn_offset / WINDOW_WIDTH, btn2PSelectorRight.y, is_btn_2P_right_down ? &img_2p_selector_scene_btn_down_Right : &img_2p_selector_scene_btn_idle_Right);
 	
 	switch (player_type_1)
 	{
-	case playerType::Peashooter:
-		animationPeashooterRight.Draw(camera, animation1PPos.x, animation1PPos.y);
-		img1PNamePos.x = img1PGravestonePos.x + ((imgGravestoneRight.getwidth() - textwidth(str_peashooter_name)) / 2);
-		OuttextxyShaded(img1PNamePos.x, img1PNamePos.y, str_peashooter_name);
+	case PlayerType::Peashooter:
+		animation_peashooter_right.Draw(camera, animation1PPos.x, animation1PPos.y);
+		img_1pNamePos.x = img_1pGravestonePos.x + ((img_gravestone_right.getwidth() - textwidth(str_peashooter_name)) / 2);
+		OuttextxyShaded(img_1pNamePos.x, img_1pNamePos.y, str_peashooter_name);
 		break;
-	case playerType::Sunflower:
-		animationSunflowerRight.Draw(camera, animation1PPos.x, animation1PPos.y);
-		img1PNamePos.x = img1PGravestonePos.x + ((imgGravestoneRight.getwidth() - textwidth(str_sunflower_name)) / 2);
-		OuttextxyShaded(img1PNamePos.x, img1PNamePos.y, str_sunflower_name);
+	case PlayerType::Sunflower:
+		animation_sunflower_right.Draw(camera, animation1PPos.x, animation1PPos.y);
+		img_1pNamePos.x = img_1pGravestonePos.x + ((img_gravestone_right.getwidth() - textwidth(str_sunflower_name)) / 2);
+		OuttextxyShaded(img_1pNamePos.x, img_1pNamePos.y, str_sunflower_name);
 		break;
 	}
 	switch (player_type_2)
 	{
-	case playerType::Peashooter:
-		animationPeashooterLeft.Draw(camera, animation2PPos.x, animation2PPos.y);
-		img2PNamePos.x = img2PGravestonePos.x + ((imgGravestoneLeft.getwidth() - textwidth(str_peashooter_name)) / 2);
-		OuttextxyShaded(img2PNamePos.x, img2PNamePos.y, str_peashooter_name);
+	case PlayerType::Peashooter:
+		animation_peashooter_left.Draw(camera, animation2PPos.x, animation2PPos.y);
+		img_2pNamePos.x = img_2pGravestonePos.x + ((img_gravestone_left.getwidth() - textwidth(str_peashooter_name)) / 2);
+		OuttextxyShaded(img_2pNamePos.x, img_2pNamePos.y, str_peashooter_name);
 		break;
-	case playerType::Sunflower:
-		animationSunflowerLeft.Draw(camera, animation2PPos.x, animation2PPos.y);
-		img2PNamePos.x = img2PGravestonePos.x + ((imgGravestoneLeft.getwidth() - textwidth(str_sunflower_name)) / 2);
-		OuttextxyShaded(img2PNamePos.x, img2PNamePos.y, str_sunflower_name);
+	case PlayerType::Sunflower:
+		animation_sunflower_left.Draw(camera, animation2PPos.x, animation2PPos.y);
+		img_2pNamePos.x = img_2pGravestonePos.x + ((img_gravestone_left.getwidth() - textwidth(str_sunflower_name)) / 2);
+		OuttextxyShaded(img_2pNamePos.x, img_2pNamePos.y, str_sunflower_name);
 		break;
 	}
 }
@@ -231,20 +233,20 @@ void SelectorScene::Exit()
 
 	switch (player_type_1)
 	{
-	case SelectorScene::playerType::Peashooter:
+	case SelectorScene::PlayerType::Peashooter:
 		player_1 = new Peashooter();
 		break;
-	case SelectorScene::playerType::Sunflower:
+	case SelectorScene::PlayerType::Sunflower:
 		player_1 = new Sunflower();
 		break;
 	}
 	player_1->SetID(PlayerID::P1);
 	switch (player_type_2)
 	{
-	case SelectorScene::playerType::Peashooter:
+	case SelectorScene::PlayerType::Peashooter:
 		player_2 = new Peashooter();
 		break;
-	case SelectorScene::playerType::Sunflower:
+	case SelectorScene::PlayerType::Sunflower:
 		player_2 = new Sunflower();
 		break;
 	}

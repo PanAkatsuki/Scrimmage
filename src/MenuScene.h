@@ -8,16 +8,13 @@ extern IMAGE imgMenuBackground;
 
 extern SceneManager scene_manager;
 
-extern Camera camera;
-
 class MenuScene : public Scene
 {
-private:
-
 public:
 	MenuScene() = default;
 	~MenuScene() = default;
-
+public:
+	// Default
 	void Enter();
 	void Input(ExMessage& msg);
 	void Update(int& delta);

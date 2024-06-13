@@ -30,13 +30,13 @@ void SceneManager::SwitchTo(SceneManager::SceneType type)
 	switch (type)
 	{
 	case SceneManager::SceneType::Menu:
-		current_scene = menuScene;
+		current_scene = menu_scene;
 		break;
 	case SceneManager::SceneType::Game:
-		current_scene = gameScene;
+		current_scene = game_scene;
 		break;
 	case SceneManager::SceneType::Selector:
-		current_scene = selectorScene;
+		current_scene = selector_scene;
 		break;
 	default:
 		break;

@@ -7,10 +7,12 @@ void Timer::Update(int& delta)
 	{
 		return;
 	}
+
 	passTime += delta;
+
 	if (passTime >= waitTime)
 	{
-		if (!oneShot || (oneShot && !shotted) && callback)
+		if ((!oneShot || (oneShot && !shotted)) && callback)
 		{
 			callback();
 		}
@@ -25,13 +27,9 @@ void Timer::SetWaitTime(int val)
 	waitTime = val;
 }
 
-void Timer::SetPause()
+void Timer::SetPause(bool flag)
 {
-	paused = true;
-}
-void Timer::SetContinue()
-{
-	paused = false;
+	paused = flag;
 }
 
 void Timer::SetOneShot(bool flag)
@@ -45,7 +43,7 @@ void Timer::SetCallback(std::function<void()> callback)
 }
 
 // Reset
-void Timer::Reset()
+void Timer::Restart()
 {
 	passTime = 0;
 	shotted = false;

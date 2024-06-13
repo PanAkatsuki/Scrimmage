@@ -6,8 +6,8 @@
 #include "SunBullet.h"
 #include "SunBulletEX.h"
 
-extern Atlas atlasSunflowerIdleLeft;
-extern Atlas atlasSunflowerIdleRight;
+extern Atlas atlas_sunflower_idle_left;
+extern Atlas atlas_sunflower_idle_right;
 extern Atlas atlasSunflowerRunLeft;
 extern Atlas atlasSunflowerRunRight;
 extern Atlas atlasSunflowerAttackEXLeft;

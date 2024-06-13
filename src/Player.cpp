@@ -1,4 +1,5 @@
 #include "Player.h"
+
 // Constructor
 Player::Player()
 {
@@ -41,7 +42,7 @@ void Player::Input(ExMessage& msg)
 				{
 					Attack();
 					can_attack = false;
-					timer_attack_cd.Reset();
+					timer_attack_cd.Restart();
 				}
 				break;
 			case 0x47: // 'G'
@@ -75,7 +76,7 @@ void Player::Input(ExMessage& msg)
 				{
 					Attack();
 					can_attack = false;
-					timer_attack_cd.Reset();
+					timer_attack_cd.Restart();
 				}
 				break;
 			case VK_OEM_2: // '/'

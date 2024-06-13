@@ -23,8 +23,7 @@ public:
 	// Set
 	void SetPosition(int x, int y);
 	Vector2 GetPosition() const;
-	void Reset();
 	
-
+	// Shake
 	void Shake(int strength, int duration);
 };

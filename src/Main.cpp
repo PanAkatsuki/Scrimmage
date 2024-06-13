@@ -31,13 +31,13 @@ int main()
 
 	BeginBatchDraw();
 
-	menuScene = new MenuScene();
-	gameScene = new GameScene();
-	selectorScene = new SelectorScene();
+	menu_scene = new MenuScene();
+	game_scene = new GameScene();
+	selector_scene = new SelectorScene();
 
-	scene_manager.SetCurrentScene(menuScene);
+	scene_manager.SetCurrentScene(menu_scene);
 
-	menuScene->Enter();
+	menu_scene->Enter();
 
 	while (true)
 	{

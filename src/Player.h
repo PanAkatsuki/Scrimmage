@@ -2,7 +2,6 @@
 
 #include <graphics.h>
 
-#include "Vector2.h"
 #include "Animation.h"
 #include "Camera.h"
 #include "Platform.h"

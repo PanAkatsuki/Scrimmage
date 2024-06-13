@@ -2,9 +2,9 @@
 
 #include "Scene.h"
 
-extern Scene* menuScene;
-extern Scene* selectorScene;
-extern Scene* gameScene;
+extern Scene* menu_scene;
+extern Scene* selector_scene;
+extern Scene* game_scene;
 
 class SceneManager
 {

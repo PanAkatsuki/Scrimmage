@@ -6,8 +6,8 @@
 
 #include "PeaBullet.h"
 
-extern Atlas atlasPeashooterIdleLeft;
-extern Atlas atlasPeashooterIdleRight;
+extern Atlas atlas_peashooter_idle_left;
+extern Atlas atlas_peashooter_idle_right;
 extern Atlas atlasPeashooterRunLeft;
 extern Atlas atlasPeashooterRunRight;
 extern Atlas atlasPeashooterAttackEXLeft;

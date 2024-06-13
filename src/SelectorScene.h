@@ -11,39 +11,42 @@
 #include "PutImageAlpha.h"
 #include "Global.h"
 
-extern IMAGE imgSelectorBackground;
-extern IMAGE imgVS;
-extern IMAGE imgSelectorTip;
+extern IMAGE img_selector_scene_background;
+extern IMAGE img_vs;
+extern IMAGE img_tip;
 
-extern IMAGE imgGravestoneLeft;
-extern IMAGE imgGravestoneRight;
+extern IMAGE img_gravestone_left;
+extern IMAGE img_gravestone_right;
 
-extern IMAGE img1P;
-extern IMAGE img2P;
-extern IMAGE img1PDesc;
-extern IMAGE img2PDesc;
+extern IMAGE img_1p;
+extern IMAGE img_2p;
+extern IMAGE img_1p_desc;
+extern IMAGE img_2p_desc;
 
-extern IMAGE img1PSelectorBtnIdleLeft;
-extern IMAGE img1PSelectorBtnIdleRight;
-extern IMAGE img1PSelectorBtnDownLeft;
-extern IMAGE img1PSelectorBtnDownRight;
-extern IMAGE img2PSelectorBtnIdleLeft;
-extern IMAGE img2PSelectorBtnIdleRight;
-extern IMAGE img2PSelectorBtnDownLeft;
-extern IMAGE img2PSelectorBtnDownRight;
+extern IMAGE img_1p_selector_scene_btn_idle_left;
+extern IMAGE img_1p_selector_scene_btn_idle_Right;
+extern IMAGE img_2p_selector_scene_btn_idle_Left;
+extern IMAGE img_2p_selector_scene_btn_idle_Right;
 
-extern IMAGE imgPeashooterSelectorBackgroundLeft;
-extern IMAGE imgPeashooterSelectorBackgroundRight;
-extern IMAGE imgSunflowerSelectorBackgroundLeft;
-extern IMAGE imgSunflowerSelectorBackgroundRight;
+extern IMAGE img_1p_selector_scene_btn_down_Left;
+extern IMAGE img_1p_selector_scene_btn_down_Right;
+extern IMAGE img_2p_selector_scene_btn_down_Left;
+extern IMAGE img_2p_selector_scene_btn_down_Right;
 
-extern Atlas atlasPeashooterIdleLeft;
-extern Atlas atlasPeashooterIdleRight;
-extern Atlas atlasSunflowerIdleLeft;
-extern Atlas atlasSunflowerIdleRight;
+extern IMAGE img_peashooter_selector_scene_background_left;
+extern IMAGE img_peashooter_selector_scene_background_Right;
+extern IMAGE img_sunflower_selector_scene_background_left;
+extern IMAGE img_sunflower_selector_scene_background_Right;
 
-extern IMAGE imgAvatarPeashooter;
-extern IMAGE imgAvatarSunflower;
+extern Atlas atlas_peashooter_idle_left;
+extern Atlas atlas_peashooter_idle_right;
+extern Atlas atlas_sunflower_idle_left;
+extern Atlas atlas_sunflower_idle_right;
+
+// no use
+extern IMAGE img_avatar_peashooter;
+extern IMAGE img_avatar_sunflower;
+
 
 extern SceneManager scene_manager;
 
@@ -56,31 +59,31 @@ public:
 	SelectorScene() = default;
 	~SelectorScene() = default;
 private:
-	enum class playerType
+	enum class PlayerType
 	{
 		Peashooter = 0,
 		Sunflower,
 		Invalid
 	};
 private:
-	POINT imgVSPos = { 0 };
-	POINT imgTipPos = { 0 };
+	POINT img_vs_position = { 0 };
+	POINT img_tip_position = { 0 };
 
-	POINT img1PGravestonePos = { 0 };
-	POINT img2PGravestonePos = { 0 };
+	POINT img_1pGravestonePos = { 0 };
+	POINT img_2pGravestonePos = { 0 };
 
-	POINT img1PPos = { 0 };
-	POINT img2PPos  = { 0 };
-	POINT img1PDescPos = { 0 };
-	POINT img2PDescPos = { 0 };
+	POINT img_1pPos = { 0 };
+	POINT img_2pPos  = { 0 };
+	POINT img_1p_descPos = { 0 };
+	POINT img_2p_descPos = { 0 };
 
 	POINT btn1PSelectorLeft = { 0 };
 	POINT btn1PSelectorRight = { 0 };
 	POINT btn2PSelectorLeft = { 0 };
 	POINT btn2PSelectorRight = { 0 };
 
-	POINT img1PNamePos = { 0 };
-	POINT img2PNamePos = { 0 };
+	POINT img_1pNamePos = { 0 };
+	POINT img_2pNamePos = { 0 };
 
 	POINT animation1PPos = { 0 };
 	POINT animation2PPos = { 0 };
@@ -95,17 +98,19 @@ private:
 	bool is_btn_2P_left_down = false;
 	bool is_btn_2P_right_down = false;
 private:
-	Animation animationPeashooterLeft;
-	Animation animationPeashooterRight;
-	Animation animationSunflowerLeft;
-	Animation animationSunflowerRight;
+	// Animation
+	Animation animation_peashooter_left;
+	Animation animation_peashooter_right;
+	Animation animation_sunflower_left;
+	Animation animation_sunflower_right;
 
-	playerType player_type_1 = playerType::Peashooter;
-	playerType player_type_2 = playerType::Sunflower;
+	PlayerType player_type_1 = PlayerType::Peashooter;
+	PlayerType player_type_2 = PlayerType::Sunflower;
 
 	LPCTSTR str_peashooter_name = _T("Peashooter");
 	LPCTSTR str_sunflower_name = _T("Sunflower");
 public:
+	// Default
 	void Enter();
 	void Input(ExMessage& msg);
 	void Update(int& delta);
