@@ -23,9 +23,9 @@ public:
 	Sunflower();
 	~Sunflower() = default;
 private:
-	const int velocity_sun_ex_y = 5;
-	const int velocity_sun_x = 5;
-	const int velocity_sun_y = 5;
+	const int velocity_sun_ex_y = 4;
+	const int velocity_sun_x = 10;
+	const int velocity_sun_y = 20;
 private:
 	Animation animation_sun_text;
 	bool is_sun_text_visible = false;

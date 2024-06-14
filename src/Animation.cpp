@@ -8,6 +8,7 @@ void Animation::Update(int& delta)
 	{
 		idx_frame++;
 		timer = 0;
+
 		if (idx_frame >= atlas->GetSize())
 		{
 			idx_frame = is_loop ? 0 : atlas->GetSize() - 1;

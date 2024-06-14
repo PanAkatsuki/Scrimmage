@@ -33,10 +33,10 @@ IMAGE img_peashooter_selector_scene_background_Right;
 IMAGE img_sunflower_selector_scene_background_left;
 IMAGE img_sunflower_selector_scene_background_Right;
 
-IMAGE imgSky;
-IMAGE imgHills;
-IMAGE imgPlatformLarge;
-IMAGE imgPlatformSmall;
+IMAGE img_sky;
+IMAGE img_hills;
+IMAGE img_platform_large;
+IMAGE img_platform_small;
 
 IMAGE img_1pCursor;
 IMAGE img_2pCursor;
@@ -59,8 +59,8 @@ Atlas atlasSunflowerAttackEXRight;
 Atlas atlasSunflowerDieLeft;
 Atlas atlasSunflowerDieRight;
 
-IMAGE imgPea;
-Atlas atlasPeaBreak;
+IMAGE img_pea;
+Atlas atlas_pea_break;
 Atlas atlasSun;
 Atlas atlasSunExplode;
 Atlas atlasSunEX;
@@ -87,11 +87,10 @@ Camera camera;
 SceneManager scene_manager;
 
 std::vector<Platform> platform_list;
+std::vector<Bullet*> bullet_list;
 
 Player* player_1 = nullptr;
 Player* player_2 = nullptr;
-
-std::vector<Bullet*> bullet_list;
 
 inline void LoadGameResource()
 {
@@ -121,10 +120,10 @@ inline void LoadGameResource()
 	loadimage(&img_sunflower_selector_scene_background_Right, _T("resources/sunflower_selector_background.png"));
 	FlipImage(&img_sunflower_selector_scene_background_Right, &img_sunflower_selector_scene_background_left);
 
-	loadimage(&imgSky, _T("resources/sky.png"));
-	loadimage(&imgHills, _T("resources/hills.png"));
-	loadimage(&imgPlatformLarge, _T("resources/platform_large.png"));
-	loadimage(&imgPlatformSmall, _T("resources/platform_small.png"));
+	loadimage(&img_sky, _T("resources/sky.png"));
+	loadimage(&img_hills, _T("resources/hills.png"));
+	loadimage(&img_platform_large, _T("resources/platform_large.png"));
+	loadimage(&img_platform_small, _T("resources/platform_small.png"));
 
 	loadimage(&img_1pCursor, _T("resources/1P_cursor.png"));
 	loadimage(&img_2pCursor, _T("resources/2P_cursor.png"));
@@ -147,8 +146,8 @@ inline void LoadGameResource()
 	atlasSunflowerDieRight.LoadFromFile(_T("resources/Sunflower_die_%d.png"), 2);
 	FlipAtlas(atlasSunflowerDieRight, atlasSunflowerDieLeft);
 
-	loadimage(&imgPea, _T("resources/pea.png"));
-	atlasPeaBreak.LoadFromFile(_T("resources/pea_break_%d.png"), 3);
+	loadimage(&img_pea, _T("resources/pea.png"));
+	atlas_pea_break.LoadFromFile(_T("resources/pea_break_%d.png"), 3);
 	atlasSun.LoadFromFile(_T("resources/sun_%d.png"), 5);
 	atlasSunExplode.LoadFromFile(_T("resources/sun_explode_%d.png"), 5);
 	atlasSunEX.LoadFromFile(_T("resources/sun_ex_%d.png"), 5);

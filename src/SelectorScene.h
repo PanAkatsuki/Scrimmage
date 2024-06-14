@@ -69,27 +69,29 @@ private:
 	POINT img_vs_position = { 0 };
 	POINT img_tip_position = { 0 };
 
-	POINT img_1pGravestonePos = { 0 };
-	POINT img_2pGravestonePos = { 0 };
+	POINT img_1p_gravestone_position = { 0 };
+	POINT img_2p_gravestone_position = { 0 };
 
-	POINT img_1pPos = { 0 };
-	POINT img_2pPos  = { 0 };
-	POINT img_1p_descPos = { 0 };
-	POINT img_2p_descPos = { 0 };
+	POINT img_1p_position = { 0 };
+	POINT img_2p_position  = { 0 };
+	POINT img_1p_desc_position = { 0 };
+	POINT img_2p_desc_position = { 0 };
 
-	POINT btn1PSelectorLeft = { 0 };
-	POINT btn1PSelectorRight = { 0 };
-	POINT btn2PSelectorLeft = { 0 };
-	POINT btn2PSelectorRight = { 0 };
+	POINT btn_1p_selector_scene_left = { 0 };
+	POINT btn_1p_selector_scene_right = { 0 };
+	POINT btn_2p_selector_scene_left = { 0 };
+	POINT btn_2p_selector_scene_right = { 0 };
 
-	POINT img_1pNamePos = { 0 };
-	POINT img_2pNamePos = { 0 };
+	POINT img_1p_name_position = { 0 };
+	POINT img_2p_name_position = { 0 };
 
-	POINT animation1PPos = { 0 };
-	POINT animation2PPos = { 0 };
+	POINT animation_1p_position = { 0 };
+	POINT animation_2p_position = { 0 };
 
+	// Dynamic background
 	int selector_background_scorll_offset_x = 0;
 
+	// Dynamic btn
 	bool btnplus = true;
 	int btn_offset = 0;
 
@@ -116,6 +118,6 @@ public:
 	void Update(int& delta);
 	void Draw(Camera& camera);
 	void Exit();
-
+public:
 	void OuttextxyShaded(int x, int y, LPCTSTR str);
 };

@@ -4,7 +4,6 @@
 
 #include <functional>
 
-#include "vector2.h"
 #include "Camera.h"
 #include "Player_id.h"
 
@@ -23,27 +22,33 @@ protected:
 	bool can_remove = false;
 	std::function<void()> callback = nullptr;
 public:
+	// Set
 	void SetTargetID(PlayerID id);
-	PlayerID GetTargetID() const;
 	void SetSize(Vector2& vec);
-	Vector2 GetSize() const;
 	void SetPosition(Vector2& vec);
-	Vector2 GetPosition() const;
 	void SetVelocity(Vector2& vec);
-	Vector2 GetVelocity() const;
 	void SetDamage(int val);
-	int GetDamage() const;
 	void SetValid(bool flag);
-	bool GetValid() const;
 	void SetCanRemove(bool flag);
-	bool GetCanRemove() const;
 	void SetCallback(std::function<void()> callback);
+
+	// Get
+	PlayerID GetTargetID() const;
+	Vector2 GetSize() const;
+	Vector2 GetPosition() const;
+	Vector2 GetVelocity() const;
+	int GetDamage() const;
+	bool GetValid() const;
+	bool GetCanRemove() const;
 public:
-	void Update(int delta);
-	void Draw(Camera& camera);
+	// Default
+	virtual void Update(int& delta);
+	virtual void Draw(Camera& camera) const;
 public:
+	// Check
 	bool CheckBulletExceedsScreen();
 public:
+	// Collide
 	virtual void Collide() const;
 	virtual bool CheckCollision(Vector2& position, Vector2& size) const;
 

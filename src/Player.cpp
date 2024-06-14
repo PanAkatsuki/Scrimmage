@@ -13,8 +13,26 @@ Player::Player()
 			can_attack = true;
 		}
 	);
+
+	timer_invulnerable.SetWaitTime(20);
+	timer_invulnerable.SetOneShot(true);
+	timer_invulnerable.SetCallback(
+		[&]()
+		{
+			is_invulnerable = false;
+		}
+	);
+
+	timer_invulnerable_blink.SetWaitTime(2);
+	timer_invulnerable.SetCallback(
+		[&]()
+		{
+			is_showing_sketch_frame = !is_showing_sketch_frame;
+		}
+	);
 }
 
+// Default
 void Player::Input(ExMessage& msg)
 {
 	switch (msg.message)
@@ -46,10 +64,10 @@ void Player::Input(ExMessage& msg)
 				}
 				break;
 			case 0x47: // 'G'
-				if (mp >= 100)
+				if ( mp >= 100)
 				{
 					AttackEX();
-					mp = 0;
+					//mp = 0;
 				}
 				break;
 			default:
@@ -83,7 +101,7 @@ void Player::Input(ExMessage& msg)
 				if (mp >= 100)
 				{
 					AttackEX();
-					mp = 0;
+					//mp = 0;
 				}
 				break;
 			default:
@@ -143,19 +161,37 @@ void Player::Input(ExMessage& msg)
 		break;
 	}
 }
-void Player::Update(int delta)
+
+void Player::Update(int& delta)
 {
+	// Gravity
 	Gravity(delta);
 
+	// Move
 	Run(delta);
 
+	// Jump and down
 	Jump();
 	Down();
 
+	// Collide
+	Collide();
+
+	// Update Animation
 	current_animation->Update(delta);
 
-	timer_attack_cd.Update(delta);
+	if(!can_attack)
+	{
+		timer_attack_cd.Update(delta);
+	}
+
+	if (is_invulnerable)
+	{
+		timer_invulnerable.Update(delta);
+		timer_invulnerable_blink.Update(delta);
+	}
 }
+
 void Player::Draw(Camera& camera)
 {
 	current_animation->Draw(camera, position.x, position.y);
@@ -198,43 +234,52 @@ void Player::Draw(Camera& camera)
 		}
 	}
 }
+
 // Set
 void Player::SetID(PlayerID id)
 {
 	this->id = id;
 }
+
 void Player::SetSize(int x, int y)
 {
 	this->size.x = x;
 	this->size.y = y;
 }
+
 void Player::SetPosition(int x, int y)
 {
 	this->position.x = x;
 	this->position.y = y;
 }
+
 void Player::SetVelocity(int x, int y)
 {
 	this->velocity.x = x;
 	this->velocity.y = y;
 }
+
 // Get
 PlayerID Player::GetId() const
 {
 	return this->id;
 }
+
 Vector2 Player::GetSize() const
 {
 	return this->size;
 }
+
 Vector2 Player::GetPosition() const
 {
 	return this->position;
 }
+
 Vector2 Player::GetVelocity() const
 {
 	return this->velocity;
 }
+
 
 void Player::Gravity(int delta)
 {
@@ -286,6 +331,7 @@ void Player::Run(int delta)
 	}
 	position.x += velocity.x;
 }
+
 void Player::Jump()
 {
 	if (is_attack_ex)
@@ -297,6 +343,7 @@ void Player::Jump()
 		velocity.y += jump_speed;
 	}
 }
+
 void Player::Down()
 {
 	for(size_t i = 1; i < platform_list.size(); i++)
@@ -308,6 +355,25 @@ void Player::Down()
 	}
 }
 
+void Player::Collide()
+{
+	for (Bullet* bullet : bullet_list)
+	{
+		if(!bullet->GetValid() || bullet->GetTargetID() != id)
+		{
+			continue;
+		}
+
+		if (bullet->CheckCollision(position, size))
+		{
+			bullet->Collide();
+			bullet->SetValid(false);
+			hp -= bullet->GetDamage();
+		}
+	}
+}
+
+// Attack
 void Player::Attack()
 {
 

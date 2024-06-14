@@ -2,6 +2,8 @@
 
 Sunflower::Sunflower()
 {
+	mp = 100;
+
 	animation_idel_left.SetAtlas(&atlas_sunflower_idle_left);
 	animation_idel_right.SetAtlas(&atlas_sunflower_idle_right);
 	animation_run_left.SetAtlas(&atlas_sunflower_idle_left);
@@ -38,18 +40,28 @@ Sunflower::Sunflower()
 	);
 
 	SetSize(96, 96);
-
 }
 
+// Default
 void Sunflower::Update(int& delta)
 {
 	Player::Update(delta);
 
 	if (is_sun_text_visible)
 	{
+		switch (is_facing_right)
+		{
+		case true:
+			animation_attack_ex_right.Update(delta);
+			break;
+		case false:
+			animation_attack_ex_left.Update(delta);
+			break;
+		}
 		animation_sun_text.Update(delta);
 	}
 }
+
 void Sunflower::Draw(Camera& camera)
 {
 	Player::Draw(camera);
@@ -57,23 +69,31 @@ void Sunflower::Draw(Camera& camera)
 	if (is_sun_text_visible)
 	{
 		IMAGE* img = animation_sun_text.GetFrame();
-		animation_sun_text.Draw(camera, position.x - img->getwidth(), position.y - img->getheight());
+		switch(is_facing_right)
+		{
+		case true:
+			animation_sun_text.Draw(camera, position.x + size.x - img->getwidth() / 2, position.y - img->getheight() / 2);
+			break;
+		case false:
+			animation_sun_text.Draw(camera, position.x - img->getwidth() / 2, position.y - img->getheight() / 2);
+			break;
+		}
 	}
 }
 
 void Sunflower::SpawnSunBullet()
 {
-	// new bullet
+	// New bullet
 	Bullet* bullet = new SunBullet();
 
-	// set bullet position
+	// Set bullet position
 	Vector2 bullet_position;
 	Vector2 bullet_size = bullet->GetSize();
 	bullet_position.x = position.x + (size.x - bullet_size.x) / 2;
 	bullet_position.y = position.y;
 	bullet->SetPosition(bullet_position);
 
-	// set bullet velocity
+	// Set bullet velocity
 	Vector2 bullet_velocity;
 	if (is_facing_right)
 	{
@@ -83,10 +103,10 @@ void Sunflower::SpawnSunBullet()
 	{
 		bullet_velocity.x = -velocity_sun_x;
 	}
-	bullet_velocity.y = velocity_sun_y;
+	bullet_velocity.y = -velocity_sun_y;
 	bullet->SetVelocity(bullet_velocity);
 
-	// set bullet target
+	// Set bullet target
 	switch (id)
 	{
 	case PlayerID::P1:
@@ -97,7 +117,7 @@ void Sunflower::SpawnSunBullet()
 		break;
 	}
 
-	// set bullet callback
+	// Set bullet callback
 	bullet->SetCallback(
 		[&]()
 		{
@@ -105,21 +125,21 @@ void Sunflower::SpawnSunBullet()
 		}
 	);
 
-	// push back bullet
+	// Push back bullet
 	bullet_list.push_back(bullet);
 }
 void Sunflower::Attack()
 {
 	SpawnSunBullet();
 
-	// play sound
+	// Play sound
 }
 void Sunflower::SpawnSunBulletEX()
 {
-	// new bullet
+	// New bullet
 	Bullet* bullet = new SunBulletEX();
 
-	// set bullet target
+	// Set bullet target
 	Player* target_player = ((id == PlayerID::P1) ? player_2 : player_1);
 
 	switch (target_player->GetId())
@@ -132,19 +152,19 @@ void Sunflower::SpawnSunBulletEX()
 		break;
 	}
 
-	// set bullet position
+	// Set bullet position
 	Vector2 bullet_position;
 	Vector2 target_position = target_player->GetPosition();
 
-	bullet_position.x = target_position.x - bullet->GetSize().x / 2;
+	bullet_position.x = target_position.x + (target_player->GetSize().x - bullet->GetSize().x) / 2;
 	bullet_position.y = target_position.x - bullet->GetSize().y - target_player->GetSize().y;
 	bullet->SetPosition(bullet_position);
 
-	// set bullet velocity
+	// Set bullet velocity
 	Vector2 bullet_velocity = { 0, velocity_sun_ex_y };
 	bullet->SetVelocity(bullet_velocity);
 
-	// set bullet callback
+	// Set bullet callback
 	bullet->SetCallback(
 		[&]()
 		{
@@ -152,23 +172,23 @@ void Sunflower::SpawnSunBulletEX()
 		}
 	);
 
-	// push back bullet
+	// Push back bullet
 	bullet_list.push_back(bullet);
 }
 void Sunflower::AttackEX()
 {
 	SpawnSunBulletEX();
 
-	// play sound
+	// Play sound
 	mciSendStringW(_T("play sun_text from 0"), NULL, 0, NULL);
 
-	// set bool
+	// Set bool
 	is_attack_ex = true;
 	is_sun_text_visible = true;
 
-	// animation
+	// Animation
 	animation_sun_text.Reset();
 	is_facing_right ? animation_attack_ex_right.Reset() : animation_attack_ex_left.Reset();
-
+	is_facing_right ? current_animation = &animation_attack_ex_right : current_animation = &animation_attack_ex_left;
 }
 

@@ -1,17 +1,17 @@
 #include "PeaBullet.h"
+
 // Constructor
 PeaBullet::PeaBullet()
 {
 	// Bullet Init
 	Vector2 size = { 64, 64 };
 	SetSize(size);
-
 	SetDamage(1);
 
 	// Animation Init
 	animation_break.SetInterval(6);
 	animation_break.SetLoop(false);
-	animation_break.SetAtlas(&atlasPeaBreak);
+	animation_break.SetAtlas(&atlas_pea_break);
 	animation_break.SetCallBack(
 		[&]()
 		{
@@ -39,11 +39,19 @@ void PeaBullet::Draw(Camera& camera) const
 {
 	if (valid)
 	{
-		PutImageAlpha(camera, position.x, position.y, &imgPea);
+		PutImageAlpha(camera, position.x, position.y, &img_pea);
 	}
 	else
 	{
 		animation_break.Draw(camera, position.x, position.y);
+	}
+
+	if (is_debug)
+	{
+		DebugLine(camera, position.x, position.y, position.x + size.x, position.y);
+		DebugLine(camera, position.x + size.x, position.y, position.x + size.x, position.y + size.y);
+		DebugLine(camera, position.x, position.y + size.y, position.x + size.x, position.y + size.y);
+		DebugLine(camera, position.x, position.y, position.x, position.y + size.y);
 	}
 }
 

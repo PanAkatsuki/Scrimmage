@@ -1,5 +1,6 @@
 #include "SunBullet.h"
 
+// Default
 SunBullet::SunBullet()
 {
 	// Bullet Init
@@ -33,6 +34,19 @@ void SunBullet::Update(int& delta)
 	if (valid)
 	{
 		velocity.y += gravity * delta;
+		if (velocity.y >= max_velocity_y)
+		{
+			velocity.y = max_velocity_y;
+			if(velocity.x > 0)
+			{
+				velocity.x = 1;
+			}
+			else
+			{
+				velocity.x = -1;
+			}
+		}
+		position.x += velocity.x;
 		position.y += velocity.y * delta;
 	}
 
@@ -67,7 +81,7 @@ void SunBullet::Collide()
 {
 	Bullet::Collide();
 
-	camera.Shake(5, 2);
+	camera.Shake(5, 100);
 
 	mciSendStringW(_T("play sun_explode from 0"), NULL, 0, NULL);
 }

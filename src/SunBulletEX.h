@@ -14,8 +14,11 @@ public:
 	SunBulletEX();
 	~SunBulletEX() = default;
 private:
+	// Animation
 	Animation animation_sun_ex;
 	Animation animation_sun_ex_explode;
+
+	// Offset
 	Vector2 explode_render_offset;
 public:
 	void Update(int& delta);

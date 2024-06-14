@@ -1,5 +1,6 @@
 #include "SelectorScene.h"
 
+// Default
 void SelectorScene::Enter()
 {
 	// Set atlas
@@ -22,41 +23,42 @@ void SelectorScene::Enter()
 	img_tip_position.x = (getwidth() - img_tip.getwidth()) / 2;
 	img_tip_position.y = getheight() - 125;
 
-	img_1pPos.x = (getwidth() / 2 - img_1p.getwidth()) / 2 - OFFSET_X;
-	img_1pPos.y = 35;
-	img_2pPos.x = getwidth() / 2 + (getwidth() / 2 - img_2p.getwidth()) / 2 + OFFSET_X;
-	img_2pPos.y = img_1pPos.y;
+	img_1p_position.x = (getwidth() / 2 - img_1p.getwidth()) / 2 - OFFSET_X;
+	img_1p_position.y = 35;
+	img_2p_position.x = getwidth() / 2 + (getwidth() / 2 - img_2p.getwidth()) / 2 + OFFSET_X;
+	img_2p_position.y = img_1p_position.y;
 
-	img_1p_descPos.x = (getwidth() / 2 - img_1p_desc.getwidth()) / 2 - OFFSET_X;
-	img_1p_descPos.y = getheight() - 150;
-	img_2p_descPos.x = getwidth() / 2 + (getwidth() / 2 - img_2p_desc.getwidth()) / 2 + OFFSET_X;
-	img_2p_descPos.y = img_1p_descPos.y;
+	img_1p_desc_position.x = (getwidth() / 2 - img_1p_desc.getwidth()) / 2 - OFFSET_X;
+	img_1p_desc_position.y = getheight() - 150;
+	img_2p_desc_position.x = getwidth() / 2 + (getwidth() / 2 - img_2p_desc.getwidth()) / 2 + OFFSET_X;
+	img_2p_desc_position.y = img_1p_desc_position.y;
 
-	img_1pGravestonePos.x = (getwidth() / 2 - img_gravestone_right.getwidth()) / 2 - OFFSET_X;
-	img_1pGravestonePos.y = img_1pPos.y + img_1p.getheight() + 35;
-	img_2pGravestonePos.x = getwidth() / 2 + (getwidth() / 2 - img_gravestone_left.getwidth()) / 2 + OFFSET_X;
-	img_2pGravestonePos.y = img_1pGravestonePos.y;
+	img_1p_gravestone_position.x = (getwidth() / 2 - img_gravestone_right.getwidth()) / 2 - OFFSET_X;
+	img_1p_gravestone_position.y = img_1p_position.y + img_1p.getheight() + 35;
+	img_2p_gravestone_position.x = getwidth() / 2 + (getwidth() / 2 - img_gravestone_left.getwidth()) / 2 + OFFSET_X;
+	img_2p_gravestone_position.y = img_1p_gravestone_position.y;
 
-	animation1PPos.x = (getwidth() / 2 - atlas_peashooter_idle_right.GetImage(0)->getheight()) / 2 - OFFSET_X;
-	animation1PPos.y = img_1pGravestonePos.y + 80;
-	animation2PPos.x = getwidth() / 2 + (getwidth() / 2 - atlas_peashooter_idle_right.GetImage(0)->getheight()) / 2 + OFFSET_X;
-	animation2PPos.y = img_2pGravestonePos.y + 80;
+	animation_1p_position.x = (getwidth() / 2 - atlas_peashooter_idle_right.GetImage(0)->getheight()) / 2 - OFFSET_X;
+	animation_1p_position.y = img_1p_gravestone_position.y + 80;
+	animation_2p_position.x = getwidth() / 2 + (getwidth() / 2 - atlas_peashooter_idle_right.GetImage(0)->getheight()) / 2 + OFFSET_X;
+	animation_2p_position.y = img_2p_gravestone_position.y + 80;
 
-	img_1pNamePos.x = animation1PPos.x + WINDOW_WIDTH / 100;
-	img_1pNamePos.y = animation1PPos.y + 155;
-	img_2pNamePos.x = animation2PPos.x + WINDOW_WIDTH / 100;
-	img_2pNamePos.y = animation2PPos.y + 155;
+	img_1p_name_position.x = animation_1p_position.x + WINDOW_WIDTH / 100;
+	img_1p_name_position.y = animation_1p_position.y + 155;
+	img_2p_name_position.x = animation_2p_position.x + WINDOW_WIDTH / 100;
+	img_2p_name_position.y = animation_2p_position.y + 155;
 
-	btn1PSelectorLeft.x = img_1pGravestonePos.x - img_1p_selector_scene_btn_idle_left.getwidth();
-	btn1PSelectorLeft.y = img_1pGravestonePos.y + (img_gravestone_right.getheight() - img_1p_selector_scene_btn_idle_left.getheight()) / 2;
-	btn1PSelectorRight.x = img_1pGravestonePos.x + img_gravestone_right.getwidth();
-	btn1PSelectorRight.y = btn1PSelectorLeft.y;
+	btn_1p_selector_scene_left.x = img_1p_gravestone_position.x - img_1p_selector_scene_btn_idle_left.getwidth();
+	btn_1p_selector_scene_left.y = img_1p_gravestone_position.y + (img_gravestone_right.getheight() - img_1p_selector_scene_btn_idle_left.getheight()) / 2;
+	btn_1p_selector_scene_right.x = img_1p_gravestone_position.x + img_gravestone_right.getwidth();
+	btn_1p_selector_scene_right.y = btn_1p_selector_scene_left.y;
 
-	btn2PSelectorLeft.x = img_2pGravestonePos.x - img_2p_selector_scene_btn_idle_Left.getwidth();
-	btn2PSelectorLeft.y = btn1PSelectorLeft.y;
-	btn2PSelectorRight.x = img_2pGravestonePos.x + img_gravestone_left.getwidth();
-	btn2PSelectorRight.y = btn1PSelectorLeft.y;
+	btn_2p_selector_scene_left.x = img_2p_gravestone_position.x - img_2p_selector_scene_btn_idle_Left.getwidth();
+	btn_2p_selector_scene_left.y = btn_1p_selector_scene_left.y;
+	btn_2p_selector_scene_right.x = img_2p_gravestone_position.x + img_gravestone_left.getwidth();
+	btn_2p_selector_scene_right.y = btn_1p_selector_scene_left.y;
 }
+
 void SelectorScene::Input(ExMessage& msg)
 {
 	switch (msg.message)
@@ -64,16 +66,16 @@ void SelectorScene::Input(ExMessage& msg)
 	case WM_KEYDOWN:
 		switch (msg.vkcode)
 		{
-		case 0x41:
+		case 0x41: // 'a'
 			is_btn_1P_left_down = true;
 			break;
-		case 0x44:
+		case 0x44: // 'd'
 			is_btn_1P_right_down = true;
 			break;
-		case VK_LEFT:
+		case VK_LEFT: // '©'
 			is_btn_2P_left_down = true;
 			break;
-		case VK_RIGHT:
+		case VK_RIGHT: // '¨'
 			is_btn_2P_right_down = true;
 			break;
 		default:
@@ -83,27 +85,27 @@ void SelectorScene::Input(ExMessage& msg)
 	case WM_KEYUP:
 		switch (msg.vkcode)
 		{
-		case 0x41:
+		case 0x41: // 'a'
 			is_btn_1P_left_down = false;
 			player_type_1 = (PlayerType)(((int)PlayerType::Invalid + (int)player_type_1 - 1) % (int)PlayerType::Invalid);
 			mciSendStringW(_T("play ui_switch from 0"), NULL, 0, NULL);
 			break;
-		case 0x44:
+		case 0x44: // 'd'
 			is_btn_1P_right_down = false;
 			player_type_1 = (PlayerType)(((int)PlayerType::Invalid + (int)player_type_1 + 1) % (int)PlayerType::Invalid);
 			mciSendStringW(_T("play ui_switch from 0"), NULL, 0, NULL);
 			break;
-		case VK_LEFT:
+		case VK_LEFT: // '©'
 			is_btn_2P_left_down = false;
 			player_type_2 = (PlayerType)(((int)PlayerType::Invalid + (int)player_type_2 - 1) % (int)PlayerType::Invalid);
 			mciSendStringW(_T("play ui_switch from 0"), NULL, 0, NULL);
 			break;
-		case VK_RIGHT:
+		case VK_RIGHT: // '¨'
 			is_btn_2P_right_down = false;
 			player_type_2 = (PlayerType)(((int)PlayerType::Invalid + (int)player_type_2 + 1) % (int)PlayerType::Invalid);
 			mciSendStringW(_T("play ui_switch from 0"), NULL, 0, NULL);
 			break;
-		case VK_RETURN:
+		case VK_RETURN: // 'Enter'
 			mciSendStringW(_T("play ui_confirm from 0"), NULL, 0, NULL);
 			scene_manager.SwitchTo(SceneManager::SceneType::Game);
 			break;
@@ -122,13 +124,14 @@ void SelectorScene::Update(int& delta)
 	animation_sunflower_left.Update(delta);
 	animation_sunflower_right.Update(delta);
 
+	// Dyanamic background
 	selector_background_scorll_offset_x += 5;
 	if (selector_background_scorll_offset_x >= img_peashooter_selector_scene_background_left.getwidth())
 	{
 		selector_background_scorll_offset_x = 0;
 	}
-
-	// dynamic btn update
+	
+	// Dynamic btn update
 	btnplus ? btn_offset += 400 : btn_offset -= 400;
 
 	if (btn_offset / WINDOW_WIDTH >= 10)
@@ -139,7 +142,6 @@ void SelectorScene::Update(int& delta)
 	{
 		btnplus = true;
 	}
-	//
 }
 void SelectorScene::Draw(Camera& camera)
 {
@@ -173,6 +175,7 @@ void SelectorScene::Draw(Camera& camera)
 
 	putimage(0, 0, &img_selector_scene_background, SRCCOPY);
 
+	// Dynamic background
 	if(p_p1_selector_background && p_p2_selector_background)
 	{
 		PutImageAlpha(camera, selector_background_scorll_offset_x - p_p1_selector_background->getwidth(), 0, p_p1_selector_background);
@@ -184,46 +187,46 @@ void SelectorScene::Draw(Camera& camera)
 	}
 
 	PutImageAlpha(camera, img_vs_position.x, img_vs_position.y, &img_vs);
-	PutImageAlpha(camera, img_1pPos.x, img_1pPos.y, &img_1p);
-	PutImageAlpha(camera, img_2pPos.x, img_2pPos.y, &img_2p);
+	PutImageAlpha(camera, img_1p_position.x, img_1p_position.y, &img_1p);
+	PutImageAlpha(camera, img_2p_position.x, img_2p_position.y, &img_2p);
 
-	PutImageAlpha(camera, img_1p_descPos.x, img_1p_descPos.y, &img_1p_desc);
-	PutImageAlpha(camera, img_2p_descPos.x, img_2p_descPos.y, &img_2p_desc);
+	PutImageAlpha(camera, img_1p_desc_position.x, img_1p_desc_position.y, &img_1p_desc);
+	PutImageAlpha(camera, img_2p_desc_position.x, img_2p_desc_position.y, &img_2p_desc);
 
-	PutImageAlpha(camera, img_1pGravestonePos.x, img_1pGravestonePos.y, &img_gravestone_left);
-	PutImageAlpha(camera, img_2pGravestonePos.x, img_2pGravestonePos.y, &img_gravestone_right);
+	PutImageAlpha(camera, img_1p_gravestone_position.x, img_1p_gravestone_position.y, &img_gravestone_left);
+	PutImageAlpha(camera, img_2p_gravestone_position.x, img_2p_gravestone_position.y, &img_gravestone_right);
 
 	PutImageAlpha(camera, img_tip_position.x, img_tip_position.y, &img_tip);
 
-	PutImageAlpha(camera, btn1PSelectorLeft.x - btn_offset / WINDOW_WIDTH, btn1PSelectorLeft.y, is_btn_1P_left_down ? &img_1p_selector_scene_btn_down_Left : &img_1p_selector_scene_btn_idle_left);
-	PutImageAlpha(camera, btn1PSelectorRight.x + btn_offset / WINDOW_WIDTH, btn1PSelectorRight.y, is_btn_1P_right_down ? &img_1p_selector_scene_btn_down_Right : &img_1p_selector_scene_btn_idle_Right);
-	PutImageAlpha(camera, btn2PSelectorLeft.x - btn_offset / WINDOW_WIDTH, btn2PSelectorLeft.y, is_btn_2P_left_down ? &img_2p_selector_scene_btn_down_Left : &img_2p_selector_scene_btn_idle_Left);
-	PutImageAlpha(camera, btn2PSelectorRight.x + btn_offset / WINDOW_WIDTH, btn2PSelectorRight.y, is_btn_2P_right_down ? &img_2p_selector_scene_btn_down_Right : &img_2p_selector_scene_btn_idle_Right);
+	PutImageAlpha(camera, btn_1p_selector_scene_left.x - btn_offset / WINDOW_WIDTH, btn_1p_selector_scene_left.y, is_btn_1P_left_down ? &img_1p_selector_scene_btn_down_Left : &img_1p_selector_scene_btn_idle_left);
+	PutImageAlpha(camera, btn_1p_selector_scene_right.x + btn_offset / WINDOW_WIDTH, btn_1p_selector_scene_right.y, is_btn_1P_right_down ? &img_1p_selector_scene_btn_down_Right : &img_1p_selector_scene_btn_idle_Right);
+	PutImageAlpha(camera, btn_2p_selector_scene_left.x - btn_offset / WINDOW_WIDTH, btn_2p_selector_scene_left.y, is_btn_2P_left_down ? &img_2p_selector_scene_btn_down_Left : &img_2p_selector_scene_btn_idle_Left);
+	PutImageAlpha(camera, btn_2p_selector_scene_right.x + btn_offset / WINDOW_WIDTH, btn_2p_selector_scene_right.y, is_btn_2P_right_down ? &img_2p_selector_scene_btn_down_Right : &img_2p_selector_scene_btn_idle_Right);
 	
 	switch (player_type_1)
 	{
 	case PlayerType::Peashooter:
-		animation_peashooter_right.Draw(camera, animation1PPos.x, animation1PPos.y);
-		img_1pNamePos.x = img_1pGravestonePos.x + ((img_gravestone_right.getwidth() - textwidth(str_peashooter_name)) / 2);
-		OuttextxyShaded(img_1pNamePos.x, img_1pNamePos.y, str_peashooter_name);
+		animation_peashooter_right.Draw(camera, animation_1p_position.x, animation_1p_position.y);
+		img_1p_name_position.x = img_1p_gravestone_position.x + ((img_gravestone_right.getwidth() - textwidth(str_peashooter_name)) / 2);
+		OuttextxyShaded(img_1p_name_position.x, img_1p_name_position.y, str_peashooter_name);
 		break;
 	case PlayerType::Sunflower:
-		animation_sunflower_right.Draw(camera, animation1PPos.x, animation1PPos.y);
-		img_1pNamePos.x = img_1pGravestonePos.x + ((img_gravestone_right.getwidth() - textwidth(str_sunflower_name)) / 2);
-		OuttextxyShaded(img_1pNamePos.x, img_1pNamePos.y, str_sunflower_name);
+		animation_sunflower_right.Draw(camera, animation_1p_position.x, animation_1p_position.y);
+		img_1p_name_position.x = img_1p_gravestone_position.x + ((img_gravestone_right.getwidth() - textwidth(str_sunflower_name)) / 2);
+		OuttextxyShaded(img_1p_name_position.x, img_1p_name_position.y, str_sunflower_name);
 		break;
 	}
 	switch (player_type_2)
 	{
 	case PlayerType::Peashooter:
-		animation_peashooter_left.Draw(camera, animation2PPos.x, animation2PPos.y);
-		img_2pNamePos.x = img_2pGravestonePos.x + ((img_gravestone_left.getwidth() - textwidth(str_peashooter_name)) / 2);
-		OuttextxyShaded(img_2pNamePos.x, img_2pNamePos.y, str_peashooter_name);
+		animation_peashooter_left.Draw(camera, animation_2p_position.x, animation_2p_position.y);
+		img_2p_name_position.x = img_2p_gravestone_position.x + ((img_gravestone_left.getwidth() - textwidth(str_peashooter_name)) / 2);
+		OuttextxyShaded(img_2p_name_position.x, img_2p_name_position.y, str_peashooter_name);
 		break;
 	case PlayerType::Sunflower:
-		animation_sunflower_left.Draw(camera, animation2PPos.x, animation2PPos.y);
-		img_2pNamePos.x = img_2pGravestonePos.x + ((img_gravestone_left.getwidth() - textwidth(str_sunflower_name)) / 2);
-		OuttextxyShaded(img_2pNamePos.x, img_2pNamePos.y, str_sunflower_name);
+		animation_sunflower_left.Draw(camera, animation_2p_position.x, animation_2p_position.y);
+		img_2p_name_position.x = img_2p_gravestone_position.x + ((img_gravestone_left.getwidth() - textwidth(str_sunflower_name)) / 2);
+		OuttextxyShaded(img_2p_name_position.x, img_2p_name_position.y, str_sunflower_name);
 		break;
 	}
 }

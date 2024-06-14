@@ -3,7 +3,7 @@
 // Constructor
 Peashooter::Peashooter()
 {
-	//mp = 100;
+	mp = 100;
 
 	animation_idel_left.SetAtlas(&atlas_peashooter_idle_left);
 	animation_idel_right.SetAtlas(&atlas_peashooter_idle_right);
@@ -27,6 +27,7 @@ Peashooter::Peashooter()
 		[&]()
 		{
 			is_attack_ex = false;
+			is_facing_right ? current_animation = &animation_idel_right : current_animation = &animation_idel_left;
 		}
 	);
 
@@ -45,10 +46,57 @@ void Peashooter::Update(int& delta)
 
 	if (is_attack_ex)
 	{
-		camera.Shake(5, 120);
+		switch (is_facing_right)
+		{
+		case true:
+			animation_attack_ex_right.Update(delta);
+			break;
+		case false:
+			animation_attack_ex_left.Update(delta);
+			break;
+		}
+
 		timer_attack_ex.Update(delta);
 		timer_spwan_pea_ex.Update(delta);
 	}
+}
+
+void Peashooter::SpawnPeaBullet(int speed)
+{
+	// New bullet
+	Bullet* bullet = new PeaBullet();
+
+	// Set bullet target
+	Player* target_player = ((id == PlayerID::P1) ? player_2 : player_1);
+
+	switch (target_player->GetId())
+	{
+	case PlayerID::P1:
+		bullet->SetTargetID(PlayerID::P1);
+		break;
+	case PlayerID::P2:
+		bullet->SetTargetID(PlayerID::P2);
+		break;
+	}
+
+	// Set bullet position
+	Vector2 bullet_position;
+	Vector2 bullet_size = bullet->GetSize();
+	bullet_position.x = is_facing_right ? position.x + size.x - bullet_size.x / 2 : position.x + bullet_size.x / 2;
+	bullet_position.y = position.y;
+	bullet->SetPosition(bullet_position);
+
+	// Set bullet velocity
+	Vector2 bullet_velocity;
+	bullet_velocity.x = is_facing_right ? speed : -speed;
+	bullet_velocity.y = 0;
+	bullet->SetVelocity(bullet_velocity);
+
+	// Set bullet callback
+	bullet->SetCallback([&]() { mp += 10; });
+
+	// Push back bullet
+	bullet_list.push_back(bullet);
 }
 
 void Peashooter::Attack()
@@ -66,50 +114,15 @@ void Peashooter::Attack()
 		break;
 	}
 }
+
 void Peashooter::AttackEX()
 {
 	is_attack_ex = true;
 	timer_attack_ex.Restart();
 
 	is_facing_right ? animation_attack_ex_right.Reset() : animation_attack_ex_left.Reset();
+	is_facing_right ? current_animation = &animation_attack_ex_right : current_animation = &animation_attack_ex_left;
 
 	mciSendStringW(_T("play pea_shoot_ex from 0"), NULL, 0, NULL);
 }
 
-void Peashooter::SpawnPeaBullet(int speed)
-{
-	// new bullet
-	Bullet* bullet = new PeaBullet();
-
-	// set bullet target
-	Player* target_player = ((id == PlayerID::P1) ? player_2 : player_1);
-
-	switch (target_player->GetId())
-	{
-	case PlayerID::P1:
-		bullet->SetTargetID(PlayerID::P1);
-		break;
-	case PlayerID::P2:
-		bullet->SetTargetID(PlayerID::P2);
-		break;
-	}
-
-	// set bullet position
-	Vector2 bullet_position;
-	Vector2 bullet_size = bullet->GetSize();
-	bullet_position.x = is_facing_right ? position.x + size.x - bullet_size.x / 2 : position.x + bullet_size.x / 2;
-	bullet_position.y = position.y + bullet_size.y;
-	bullet->SetPosition(bullet_position);
-
-	// set bullet velocity
-	Vector2 bullet_velocity;
-	bullet_velocity.x = is_facing_right ? speed : -speed;
-	bullet_velocity.y = 0;
-	bullet->SetVelocity(bullet_velocity);
-
-	// set bullet callback
-	bullet->SetCallback([&]() { mp += 10; });
-
-	// push back bullet
-	bullet_list.push_back(bullet);
-}
