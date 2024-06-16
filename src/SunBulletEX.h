@@ -24,7 +24,7 @@ public:
 	void Update(int& delta);
 	void Draw(Camera& camera) const;
 public:
-	void Collide();
+	void Collide() const;
 	bool CheckCollistion(Vector2& position, Vector2& size);
 };
 

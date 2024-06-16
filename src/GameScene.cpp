@@ -43,8 +43,43 @@ void GameScene::Enter()
 	small_platform_3.shape.left = small_platform_3.render_position.x + 40;
 	small_platform_3.shape.right = small_platform_3.render_position.x + small_platform_3.img->getwidth() - 40;
 
-	player_1->SetPosition(200, 100);
-	player_2->SetPosition(700, 100);
+	player_1->SetPosition(WINDOW_WIDTH / 10 * 2 - CHARACTER_SIZE_X / 2, WINDOW_HEIGHT / 10);
+	player_2->SetPosition(WINDOW_WIDTH / 10 * 8 - CHARACTER_SIZE_X / 2, WINDOW_HEIGHT / 10);
+
+	// Set status bar hp mp
+	status_bar_p1.SetHP(player_1->GetHP());
+	status_bar_p1.SetMP(player_1->GetMP());
+	status_bar_p2.SetHP(player_2->GetHP());
+	status_bar_p2.SetMP(player_2->GetMP());
+
+	// Set status bar avatar
+	switch (player_1->GetCharacter())
+	{
+	case Character::NONE:
+		break;
+	case Character::peashooter:
+		status_bar_p1.SetAvatar(&img_avatar_peashooter);
+		break;
+	case Character::sunflower:
+		status_bar_p1.SetAvatar(&img_avatar_sunflower);
+		break;
+	}
+
+	switch (player_2->GetCharacter())
+	{
+	case Character::NONE:
+		break;
+	case Character::peashooter:
+		status_bar_p2.SetAvatar(&img_avatar_peashooter);
+		break;
+	case Character::sunflower:
+		status_bar_p2.SetAvatar(&img_avatar_sunflower);
+		break;
+	}
+
+	// Set status bar position
+	status_bar_p1.SetPosition(235, 625);
+	status_bar_p2.SetPosition(675, 625);
 }
 
 void GameScene::Input(ExMessage& msg)
@@ -54,31 +89,37 @@ void GameScene::Input(ExMessage& msg)
 
 	switch (msg.message)
 	{
-	case WM_KEYUP:
+	case WM_KEYUP: // 'Q'
 		if (msg.vkcode == 0x51)
 		{
 			is_debug = !is_debug;
 		}
-		break;
-	default:
 		break;
 	}
 }
 
 void GameScene::Update(int& delta)
 {
+	// Update camera
 	camera.Update(delta);
 
+	// Update player
 	player_1->Update(delta);
 	player_2->Update(delta);
 
+	// Update status bar hp mp
+	status_bar_p1.SetHP(player_1->GetHP());
+	status_bar_p1.SetMP(player_1->GetMP());
+	status_bar_p2.SetHP(player_2->GetHP());
+	status_bar_p2.SetMP(player_2->GetMP());
+
+	// Update bullet
 	for (Bullet* bullet : bullet_list)
 	{
 		bullet->Update(delta);
 	}
 
 	// Delete bullet
-	
 	bullet_list.erase(std::remove_if(
 		bullet_list.begin(), bullet_list.end(),
 		[](Bullet* bullet)
@@ -91,43 +132,39 @@ void GameScene::Update(int& delta)
 			return deletable;
 		}),
 		bullet_list.end());
-	
-	/*
-	for (size_t i = 0; i < bullet_list.size(); i++)
-	{
-		if (bullet_list[i]->GetCanRemove())
-		{
-			Bullet* tmp = bullet_list[i];
-			std::swap(bullet_list[i], bullet_list.back());
-			bullet_list.pop_back();
-			delete tmp;
-		}
-	}
-	*/
 }
 
 void GameScene::Draw(Camera& camera)
 {
+	// Draw background
 	PutImageAlpha(camera, img_sky_position.x, img_sky_position.y, &img_sky);
 	PutImageAlpha(camera, img_hills_position.x, img_hills_position.y, &img_hills);
 
+	// Draw platform
 	for (Platform& platform : platform_list)
 	{
 		platform.Draw(camera);
 	}
 
+	// Draw player
+	player_1->Draw(camera);
+	player_2->Draw(camera);
+
+	// Draw bullet
+	for (Bullet* bullet : bullet_list)
+	{
+		bullet->Draw(camera);
+	}
+
+	// Draw status bar
+	status_bar_p1.Draw();
+	status_bar_p2.Draw();
+
+	// Debug view
 	if (is_debug)
 	{
 		settextcolor(RGB(255, 0, 0));
 		outtextxy(15, 15, _T("Debug mode"));
-	}
-
-	player_1->Draw(camera);
-	player_2->Draw(camera);
-
-	for (Bullet* bullet : bullet_list)
-	{
-		bullet->Draw(camera);
 	}
 }
 

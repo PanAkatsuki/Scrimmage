@@ -25,5 +25,5 @@ public:
 	void Update(int& delta);
 	void Draw(Camera& camera) const;
 public:
-	void Collide();
+	void Collide() const;
 };

@@ -8,6 +8,7 @@
 #include "Bullet.h"
 
 #include "Player_id.h"
+#include "Character.h"
 
 #include "SketchImage.h"
 
@@ -64,6 +65,8 @@ protected:
 	int mp = 0;
 
 	PlayerID id = PlayerID::P1;
+	Character character = Character::NONE;
+
 	Vector2 size = { 0, 0 };
 	Vector2 position = { 0, 0 };
 protected:
@@ -78,21 +81,26 @@ protected:
 	Animation animation_attack_ex_left;
 	Animation animation_attack_ex_right;
 public:
+	// Default
 	virtual void Input(ExMessage& msg);
 	virtual void Update(int& delta);
 	virtual void Draw(Camera& camera);
 public:
 	// Set
 	void SetID(PlayerID id);
+	void SetCharacter(Character chara);
 	void SetSize(int x, int y);
 	void SetPosition(int x, int y);
 	void SetVelocity(int x, int y);
 
 	// Get
 	PlayerID GetId() const;
+	Character GetCharacter() const;
 	Vector2 GetSize() const;
 	Vector2 GetPosition() const;
 	Vector2 GetVelocity() const;
+	int GetHP() const;
+	int GetMP() const;
 public:
 	void Gravity(int delta); // is_standing
 	void Run(int delta);
@@ -103,4 +111,7 @@ public:
 	// Attack
 	virtual void Attack();
 	virtual void AttackEX();
+
+	// Invulnerable
+	void MakeInvulnerable();
 };

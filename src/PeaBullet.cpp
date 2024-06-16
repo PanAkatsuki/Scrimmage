@@ -46,16 +46,10 @@ void PeaBullet::Draw(Camera& camera) const
 		animation_break.Draw(camera, position.x, position.y);
 	}
 
-	if (is_debug)
-	{
-		DebugLine(camera, position.x, position.y, position.x + size.x, position.y);
-		DebugLine(camera, position.x + size.x, position.y, position.x + size.x, position.y + size.y);
-		DebugLine(camera, position.x, position.y + size.y, position.x + size.x, position.y + size.y);
-		DebugLine(camera, position.x, position.y, position.x, position.y + size.y);
-	}
+	Bullet::Draw(camera);
 }
 
-void PeaBullet::Collide()
+void PeaBullet::Collide() const
 {
 	Bullet::Collide();
 

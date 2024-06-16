@@ -75,13 +75,15 @@ void SunBullet::Draw(Camera& camera) const
 	{
 		animation_sun_explode.Draw(camera, position.x + explode_render_offset.x, position.y + explode_render_offset.y);
 	}
+
+	Bullet::Draw(camera);
 }
 
-void SunBullet::Collide()
+void SunBullet::Collide() const
 {
 	Bullet::Collide();
 
-	camera.Shake(5, 100);
+	camera.Shake(1, 10);
 
 	mciSendStringW(_T("play sun_explode from 0"), NULL, 0, NULL);
 }

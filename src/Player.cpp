@@ -23,8 +23,8 @@ Player::Player()
 		}
 	);
 
-	timer_invulnerable_blink.SetWaitTime(2);
-	timer_invulnerable.SetCallback(
+	timer_invulnerable_blink.SetWaitTime(5);
+	timer_invulnerable_blink.SetCallback(
 		[&]()
 		{
 			is_showing_sketch_frame = !is_showing_sketch_frame;
@@ -64,10 +64,10 @@ void Player::Input(ExMessage& msg)
 				}
 				break;
 			case 0x47: // 'G'
-				if ( mp >= 100)
+				if (mp >= 100)
 				{
 					AttackEX();
-					//mp = 0;
+					mp = 0;
 				}
 				break;
 			default:
@@ -101,7 +101,7 @@ void Player::Input(ExMessage& msg)
 				if (mp >= 100)
 				{
 					AttackEX();
-					//mp = 0;
+					mp = 0;
 				}
 				break;
 			default:
@@ -167,6 +167,12 @@ void Player::Update(int& delta)
 	// Gravity
 	Gravity(delta);
 
+	// MP
+	if (mp > 100)
+	{
+		mp = 100;
+	}
+
 	// Move
 	Run(delta);
 
@@ -180,31 +186,45 @@ void Player::Update(int& delta)
 	// Update Animation
 	current_animation->Update(delta);
 
+	// Attack
 	if(!can_attack)
 	{
 		timer_attack_cd.Update(delta);
 	}
 
+	// Invulnerable
 	if (is_invulnerable)
 	{
 		timer_invulnerable.Update(delta);
 		timer_invulnerable_blink.Update(delta);
 	}
+
+	if (is_showing_sketch_frame)
+	{
+		SketchImage(current_animation->GetFrame(), &img_sketch);
+	}
 }
 
 void Player::Draw(Camera& camera)
 {
-	current_animation->Draw(camera, position.x, position.y);
+	if (hp > 0 && is_invulnerable && is_showing_sketch_frame)
+	{
+		PutImageAlpha(camera, position.x, position.y, &img_sketch);
+	}
+	else
+	{
+		current_animation->Draw(camera, position.x, position.y);
+	}
 
 	if (is_debug)
 	{
-		settextcolor(RGB(255, 0, 0));
-
+		setlinecolor(RGB(0, 255, 0));
 		DebugLine(camera, position.x, position.y, position.x + size.x, position.y);
 		DebugLine(camera, position.x + size.x, position.y, position.x + size.x, position.y + size.y);
 		DebugLine(camera, position.x, position.y + size.y, position.x + size.x, position.y + size.y);
 		DebugLine(camera, position.x, position.y, position.x, position.y + size.y);
 
+		settextcolor(RGB(255, 255, 255));
 		switch (can_attack)
 		{
 		case true:
@@ -241,6 +261,11 @@ void Player::SetID(PlayerID id)
 	this->id = id;
 }
 
+void Player::SetCharacter(Character chara)
+{
+	character = chara;
+}
+
 void Player::SetSize(int x, int y)
 {
 	this->size.x = x;
@@ -265,6 +290,11 @@ PlayerID Player::GetId() const
 	return this->id;
 }
 
+Character Player::GetCharacter() const
+{
+	return character;
+}
+
 Vector2 Player::GetSize() const
 {
 	return this->size;
@@ -278,6 +308,14 @@ Vector2 Player::GetPosition() const
 Vector2 Player::GetVelocity() const
 {
 	return this->velocity;
+}
+int Player::GetHP() const
+{
+	return hp;
+}
+int Player::GetMP() const
+{
+	return mp;
 }
 
 
@@ -357,6 +395,11 @@ void Player::Down()
 
 void Player::Collide()
 {
+	if (is_invulnerable)
+	{
+		return;
+	}
+
 	for (Bullet* bullet : bullet_list)
 	{
 		if(!bullet->GetValid() || bullet->GetTargetID() != id)
@@ -366,6 +409,7 @@ void Player::Collide()
 
 		if (bullet->CheckCollision(position, size))
 		{
+			MakeInvulnerable();
 			bullet->Collide();
 			bullet->SetValid(false);
 			hp -= bullet->GetDamage();
@@ -381,4 +425,11 @@ void Player::Attack()
 void Player::AttackEX()
 {
 
+}
+
+// Invulnerable
+void Player::MakeInvulnerable()
+{
+	is_invulnerable = true;
+	timer_invulnerable.Restart();
 }

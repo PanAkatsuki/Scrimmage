@@ -3,8 +3,6 @@
 // Constructor
 Peashooter::Peashooter()
 {
-	mp = 100;
-
 	animation_idel_left.SetAtlas(&atlas_peashooter_idle_left);
 	animation_idel_right.SetAtlas(&atlas_peashooter_idle_right);
 	animation_run_left.SetAtlas(&atlasPeashooterRunLeft);
@@ -93,7 +91,7 @@ void Peashooter::SpawnPeaBullet(int speed)
 	bullet->SetVelocity(bullet_velocity);
 
 	// Set bullet callback
-	bullet->SetCallback([&]() { mp += 10; });
+	bullet->SetCallback([&]() { mp += 20; });
 
 	// Push back bullet
 	bullet_list.push_back(bullet);

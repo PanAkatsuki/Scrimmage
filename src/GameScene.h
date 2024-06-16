@@ -6,6 +6,9 @@
 
 #include "Platform.h"
 #include "Player.h"
+#include "StatusBar.h"
+
+#include "Global.h"
 
 extern IMAGE img_sky;
 extern IMAGE img_hills;
@@ -21,6 +24,9 @@ extern SceneManager scene_manager;
 extern Player* player_1;
 extern Player* player_2;
 
+extern IMAGE img_avatar_peashooter;
+extern IMAGE img_avatar_sunflower;
+
 class GameScene : public Scene
 {
 public:
@@ -29,6 +35,9 @@ public:
 private:
 	POINT img_sky_position = { 0 };
 	POINT img_hills_position = { 0 };
+
+	StatusBar status_bar_p1;
+	StatusBar status_bar_p2;
 public:
 	// Default
 	void Enter();

@@ -86,7 +86,14 @@ void Bullet::Update(int& delta)
 
 void Bullet::Draw(Camera& camera) const
 {
-
+	if (is_debug)
+	{
+		setlinecolor(RGB(0, 0, 255));
+		DebugLine(camera, position.x, position.y, position.x + size.x, position.y);
+		DebugLine(camera, position.x + size.x, position.y, position.x + size.x, position.y + size.y);
+		DebugLine(camera, position.x, position.y + size.y, position.x + size.x, position.y + size.y);
+		DebugLine(camera, position.x, position.y, position.x, position.y + size.y);
+	}
 }
 
 // Check

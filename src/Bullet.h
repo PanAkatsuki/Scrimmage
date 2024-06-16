@@ -7,6 +7,10 @@
 #include "Camera.h"
 #include "Player_id.h"
 
+#include "DebugLine.h"
+
+extern bool is_debug;
+
 class Bullet
 {
 public:

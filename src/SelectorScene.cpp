@@ -234,23 +234,30 @@ void SelectorScene::Exit()
 {
 	mciSendStringW(_T("stop bgm_menu"), NULL, 0, NULL);
 
+	//
 	switch (player_type_1)
 	{
 	case SelectorScene::PlayerType::Peashooter:
 		player_1 = new Peashooter();
+		player_1->SetCharacter(Character::peashooter);
 		break;
 	case SelectorScene::PlayerType::Sunflower:
 		player_1 = new Sunflower();
+		player_1->SetCharacter(Character::sunflower);
 		break;
 	}
 	player_1->SetID(PlayerID::P1);
+
+	//
 	switch (player_type_2)
 	{
 	case SelectorScene::PlayerType::Peashooter:
 		player_2 = new Peashooter();
+		player_2->SetCharacter(Character::peashooter);
 		break;
 	case SelectorScene::PlayerType::Sunflower:
 		player_2 = new Sunflower();
+		player_2->SetCharacter(Character::sunflower);
 		break;
 	}
 	player_2->SetID(PlayerID::P2);

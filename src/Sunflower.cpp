@@ -2,8 +2,6 @@
 
 Sunflower::Sunflower()
 {
-	mp = 100;
-
 	animation_idel_left.SetAtlas(&atlas_sunflower_idle_left);
 	animation_idel_right.SetAtlas(&atlas_sunflower_idle_right);
 	animation_run_left.SetAtlas(&atlas_sunflower_idle_left);
@@ -121,7 +119,7 @@ void Sunflower::SpawnSunBullet()
 	bullet->SetCallback(
 		[&]()
 		{
-			mp += 0;
+			mp += 25;
 		}
 	);
 
