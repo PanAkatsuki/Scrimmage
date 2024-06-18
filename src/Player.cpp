@@ -3,8 +3,32 @@
 // Constructor
 Player::Player()
 {
+	// Animaiton
 	current_animation = &animation_idel_left;
 
+	// Jump animation
+	animation_jump_effect.SetAtlas(&atlas_jump_effect);
+	animation_jump_effect.SetInterval(jump_effect_interval);
+	animation_jump_effect.SetLoop(false);
+	animation_jump_effect.SetCallBack(
+		[&]()
+		{
+			is_jump_effect_visible = false;
+		}
+	);
+	
+	// Land animation
+	animation_land_effect.SetAtlas(&atlas_land_effect);
+	animation_land_effect.SetInterval(land_effect_interval);
+	animation_land_effect.SetLoop(false);
+	animation_land_effect.SetCallBack(
+		[&]()
+		{
+			is_land_effect_visible = false;
+		}
+	);
+
+	// Attack cd
 	timer_attack_cd.SetWaitTime(attack_cd);
 	timer_attack_cd.SetOneShot(true);
 	timer_attack_cd.SetCallback(
@@ -14,7 +38,18 @@ Player::Player()
 		}
 	);
 
-	timer_invulnerable.SetWaitTime(20);
+	// Text mp is not enough
+	timer_is_mp_not_enough.SetWaitTime(text_mp_not_enough_duration);
+	timer_is_mp_not_enough.SetOneShot(true);
+	timer_is_mp_not_enough.SetCallback(
+		[&]()
+		{
+			is_mp_not_enough = false;
+		}
+	);
+
+	// Invulnerable
+	timer_invulnerable.SetWaitTime(invulnerable_duration);
 	timer_invulnerable.SetOneShot(true);
 	timer_invulnerable.SetCallback(
 		[&]()
@@ -23,11 +58,59 @@ Player::Player()
 		}
 	);
 
-	timer_invulnerable_blink.SetWaitTime(5);
+	timer_invulnerable_blink.SetWaitTime(blink_duration);
 	timer_invulnerable_blink.SetCallback(
 		[&]()
 		{
 			is_showing_sketch_frame = !is_showing_sketch_frame;
+		}
+	);
+
+	// Run effect
+	timer_run_effect_generation.SetWaitTime(run_effect_genneration_cd);
+	timer_run_effect_generation.SetCallback(
+		[&]()
+		{
+			// Set atlas
+			Particle particle;
+			particle.SetAtlas(&atlas_run_effect);
+
+			// Set position
+			Vector2 particle_position;
+			IMAGE* frame = atlas_run_effect.GetImage(0);
+			particle_position.x = position.x + (size.x - frame->getwidth()) / 2;
+			particle_position.y = position.y + size.y - frame->getheight();
+			particle.SetPosition(particle_position.x, particle_position.y);
+
+			// Set lifespan
+			particle.SetLifespan(run_effect_genneration_lifespan);
+
+			// Emplace back
+			particle_list.emplace_back(particle);
+		}
+	);
+
+	// Die effect
+	timer_die_effect_generation.SetWaitTime(die_effect_genneration_cd);
+	timer_die_effect_generation.SetCallback(
+		[&]()
+		{
+			// Set atlas
+			Particle particle;
+			particle.SetAtlas(&atlas_run_effect);
+
+			// Set position
+			Vector2 particle_position;
+			IMAGE* frame = atlas_run_effect.GetImage(0);
+			particle_position.x = position.x + (size.x - frame->getwidth()) / 2;
+			particle_position.y = position.y + size.y - frame->getheight();
+			particle.SetPosition(particle_position.x, particle_position.y);
+
+			// Set lifespan
+			particle.SetLifespan(2);
+
+			// Emplace back
+			particle_list.emplace_back(particle);
 		}
 	);
 }
@@ -69,6 +152,11 @@ void Player::Input(ExMessage& msg)
 					AttackEX();
 					mp = 0;
 				}
+				else
+				{
+					is_mp_not_enough = true;
+					timer_is_mp_not_enough.Restart();
+				}
 				break;
 			default:
 				break;
@@ -102,6 +190,11 @@ void Player::Input(ExMessage& msg)
 				{
 					AttackEX();
 					mp = 0;
+				}
+				else
+				{
+					is_mp_not_enough = true;
+					timer_is_mp_not_enough.Restart();
 				}
 				break;
 			default:
@@ -166,6 +259,12 @@ void Player::Update(int& delta)
 {
 	// Gravity
 	Gravity(delta);
+	
+	// HP
+	if (hp < 0)
+	{
+		hp = 0;
+	}
 
 	// MP
 	if (mp > 100)
@@ -176,20 +275,25 @@ void Player::Update(int& delta)
 	// Move
 	Run(delta);
 
-	// Jump and down
+	// Jump
 	Jump();
+
+	// Down
 	Down();
 
 	// Collide
 	Collide();
 
-	// Update Animation
-	current_animation->Update(delta);
-
 	// Attack
 	if(!can_attack)
 	{
 		timer_attack_cd.Update(delta);
+	}
+
+	// Attack EX
+	if (is_mp_not_enough)
+	{
+		timer_is_mp_not_enough.Update(delta);
 	}
 
 	// Invulnerable
@@ -203,10 +307,78 @@ void Player::Update(int& delta)
 	{
 		SketchImage(current_animation->GetFrame(), &img_sketch);
 	}
+
+	// Update animation
+	current_animation->Update(delta);
+
+	// Update jump animation
+	if (is_jump_effect_visible)
+	{
+		animation_jump_effect.Update(delta);
+	}
+	
+	// Update land animation
+	if (is_land_effect_visible)
+	{
+		animation_land_effect.Update(delta);
+	}
+
+	// Update run particle
+	timer_run_effect_generation.Update(delta);
+	for (Particle& particle : particle_list)
+	{
+		particle.Update(delta);
+	}
+
+	// Delete invalid run particle
+	particle_list.erase(std::remove_if(
+		particle_list.begin(), particle_list.end(),
+		[](Particle particle)
+		{
+			bool deletable = !particle.CheckValid();
+			if (deletable)
+			{
+				return deletable;
+			}
+			return false;
+		}),
+		particle_list.end());
 }
 
 void Player::Draw(Camera& camera)
 {
+	// Draw particle
+	for (Particle& particle : particle_list)
+	{
+		particle.Draw(camera);
+	}
+
+	// Draw jump effect
+	if (is_jump_effect_visible)
+	{
+		animation_jump_effect.Draw(camera, position_jump_effect.x, position_jump_effect.y);
+	}
+
+	// Draw land effect
+	if (is_land_effect_visible)
+	{
+		animation_land_effect.Draw(camera, position_land_effect.x, position_land_effect.y);
+	}
+
+	// Draw player id
+	switch (id)
+	{
+	case PlayerID::P1:
+		settextcolor(RGB(255, 0, 0));
+		outtextxy(position.x + size.x / 3, position.y - 20, _T("1P"));
+		break;
+	case PlayerID::P2:
+		settextcolor(RGB(0, 0, 255));
+		outtextxy(position.x + size.x / 3, position.y - 20, _T("2P"));
+		break;
+	}
+
+	// Draw character
 	if (hp > 0 && is_invulnerable && is_showing_sketch_frame)
 	{
 		PutImageAlpha(camera, position.x, position.y, &img_sketch);
@@ -214,6 +386,12 @@ void Player::Draw(Camera& camera)
 	else
 	{
 		current_animation->Draw(camera, position.x, position.y);
+	}
+
+	if (is_mp_not_enough)
+	{
+		settextcolor(RGB(255, 255, 255));
+		outtextxy(position.x + 20, position.y - 20, _T("mp"));
 	}
 
 	if (is_debug)
@@ -284,6 +462,16 @@ void Player::SetVelocity(int x, int y)
 	this->velocity.y = y;
 }
 
+void Player::SetHP(int val)
+{
+	hp = val;
+}
+
+void Player::SetMP(int val)
+{
+	mp = val;
+}
+
 // Get
 PlayerID Player::GetId() const
 {
@@ -309,10 +497,12 @@ Vector2 Player::GetVelocity() const
 {
 	return this->velocity;
 }
+
 int Player::GetHP() const
 {
 	return hp;
 }
+
 int Player::GetMP() const
 {
 	return mp;
@@ -321,6 +511,7 @@ int Player::GetMP() const
 
 void Player::Gravity(int delta)
 {
+	bool last_is_standing = is_standing;
 	is_standing = false;
 	velocity.y += gravity * delta;
 	position.y += velocity.y;
@@ -330,9 +521,12 @@ void Player::Gravity(int delta)
 		for (const Platform& platform : platform_list)
 		{
 			const Platform::CollisionShape& shape = platform.shape;
+
 			bool is_collide_x = (max(position.x + size.x, shape.right) - min(position.x, shape.left) <=
 				shape.right - shape.left + size.x);
 			bool is_collide_y = (position.y <= shape.y && position.y + size.y >= shape.y);
+
+			// Land on platform
 			if (is_collide_x && is_collide_y)
 			{
 				if (position.y + size.y - velocity.y <= shape.y)
@@ -340,6 +534,22 @@ void Player::Gravity(int delta)
 					position.y = shape.y - size.y;
 					velocity.y = 0;
 					is_standing = true;
+
+					// Land effect
+					if (!last_is_standing)
+					{
+						// Set land effect visible
+						is_land_effect_visible = true;
+
+						// Set land effect position
+						position_land_effect.x = position.x + (size.x - animation_land_effect.GetFrame()->getwidth()) / 2;
+						position_land_effect.y = position.y + size.y - animation_land_effect.GetFrame()->getheight();
+
+						// Reset land animation
+						animation_land_effect.Reset();
+
+					}
+					
 					break;
 				}
 			}
@@ -361,12 +571,15 @@ void Player::Run(int delta)
 		is_facing_right = (direction > 0);
 		current_animation = is_facing_right ? &animation_run_right : &animation_run_left;
 		velocity.x = direction * run_speed * delta;
+		timer_run_effect_generation.SetPause(false);
 	}
 	else
 	{
 		current_animation = is_facing_right ? &animation_idel_right : &animation_idel_left;
 		velocity.x = 0;
+		timer_run_effect_generation.SetPause(true);
 	}
+
 	position.x += velocity.x;
 }
 
@@ -376,14 +589,36 @@ void Player::Jump()
 	{
 		return;
 	}
+
 	if (is_up_key_down && is_standing && can_jump)
 	{
 		velocity.y += jump_speed;
+
+		// Set jump effect
+		// Set jump effect visible
+		is_jump_effect_visible = true;
+
+		// Set jump effect position
+		position_jump_effect.x = position.x + (size.x - animation_jump_effect.GetFrame()->getwidth()) / 2;
+		position_jump_effect.y = position.y + size.y - animation_jump_effect.GetFrame()->getheight();
+
+		// Reset jump animation
+		animation_jump_effect.Reset();
 	}
 }
 
 void Player::Down()
 {
+	if (!is_down_key_down)
+	{
+		return;
+	}
+
+	if (is_attack_ex)
+	{
+		return;
+	}
+
 	for(size_t i = 1; i < platform_list.size(); i++)
 	{
 		if (is_down_key_down && is_standing && position.y + size.y == platform_list[i].shape.y)
@@ -422,6 +657,7 @@ void Player::Attack()
 {
 
 }
+
 void Player::AttackEX()
 {
 

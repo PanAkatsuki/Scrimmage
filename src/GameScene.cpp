@@ -119,7 +119,7 @@ void GameScene::Update(int& delta)
 		bullet->Update(delta);
 	}
 
-	// Delete bullet
+	// Delete invalid bullet
 	bullet_list.erase(std::remove_if(
 		bullet_list.begin(), bullet_list.end(),
 		[](Bullet* bullet)

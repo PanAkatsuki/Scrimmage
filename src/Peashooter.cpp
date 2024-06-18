@@ -3,12 +3,13 @@
 // Constructor
 Peashooter::Peashooter()
 {
+	// Animation
 	animation_idel_left.SetAtlas(&atlas_peashooter_idle_left);
 	animation_idel_right.SetAtlas(&atlas_peashooter_idle_right);
-	animation_run_left.SetAtlas(&atlasPeashooterRunLeft);
-	animation_run_right.SetAtlas(&atlasPeashooterRunRight);
-	animation_attack_ex_left.SetAtlas(&atlasPeashooterAttackEXLeft);
-	animation_attack_ex_right.SetAtlas(&atlasPeashooterAttackEXRight);
+	animation_run_left.SetAtlas(&atlas_peashooter_run_left);
+	animation_run_right.SetAtlas(&atlas_peashooter_run_right);
+	animation_attack_ex_left.SetAtlas(&atlas_peashooter_attack_ex_left);
+	animation_attack_ex_right.SetAtlas(&atlas_peashooter_attack_ex_right);
 
 	animation_idel_left.SetInterval(6);
 	animation_idel_right.SetInterval(6);
@@ -17,6 +18,7 @@ Peashooter::Peashooter()
 	animation_attack_ex_left.SetInterval(6);
 	animation_attack_ex_right.SetInterval(6);
 
+	// Size
 	SetSize(96, 96);
 
 	timer_attack_ex.SetWaitTime(attack_ex_duration);
@@ -80,7 +82,7 @@ void Peashooter::SpawnPeaBullet(int speed)
 	// Set bullet position
 	Vector2 bullet_position;
 	Vector2 bullet_size = bullet->GetSize();
-	bullet_position.x = is_facing_right ? position.x + size.x - bullet_size.x / 2 : position.x + bullet_size.x / 2;
+	bullet_position.x = is_facing_right ? position.x + size.x - bullet_size.x / 2 : position.x - bullet_size.x / 2;
 	bullet_position.y = position.y;
 	bullet->SetPosition(bullet_position);
 

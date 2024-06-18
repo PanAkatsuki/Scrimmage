@@ -4,7 +4,7 @@
 
 #include "SceneManager.h"
 
-extern IMAGE imgMenuBackground;
+extern IMAGE img_menu_background;
 
 extern SceneManager scene_manager;
 

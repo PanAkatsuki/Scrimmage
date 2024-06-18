@@ -9,11 +9,11 @@ SunBulletEX::SunBulletEX()
 
 	// Animation Init
 	animation_sun_ex.SetInterval(6);
-	animation_sun_ex.SetAtlas(&atlasSunEX);
+	animation_sun_ex.SetAtlas(&atlas_sun_ex);
 
 	animation_sun_ex_explode.SetInterval(6);
 	animation_sun_ex_explode.SetLoop(false);
-	animation_sun_ex_explode.SetAtlas(&atlasSunEXExplode);
+	animation_sun_ex_explode.SetAtlas(&atlas_sun_ex_explode);
 	animation_sun_ex_explode.SetCallBack(
 		[&]()
 		{

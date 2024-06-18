@@ -10,11 +10,11 @@ SunBullet::SunBullet()
 
 	// Animation Init
 	animation_sun.SetInterval(6);
-	animation_sun.SetAtlas(&atlasSun);
+	animation_sun.SetAtlas(&atlas_sun);
 
 	animation_sun_explode.SetInterval(6);
 	animation_sun_explode.SetLoop(false);
-	animation_sun_explode.SetAtlas(&atlasSunExplode);
+	animation_sun_explode.SetAtlas(&atlas_sun_explode);
 	animation_sun_explode.SetCallBack(
 		[&]()
 		{

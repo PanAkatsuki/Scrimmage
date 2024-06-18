@@ -9,7 +9,7 @@
 
 #include "FlipAtlas.h"
 
-IMAGE imgMenuBackground;
+IMAGE img_menu_background;
 
 IMAGE img_vs;
 IMAGE img_1p;
@@ -38,42 +38,42 @@ IMAGE img_hills;
 IMAGE img_platform_large;
 IMAGE img_platform_small;
 
-IMAGE img_1pCursor;
-IMAGE img_2pCursor;
+IMAGE img_1p_cursor;
+IMAGE img_2p_cursor;
 
 Atlas atlas_peashooter_idle_left;
 Atlas atlas_peashooter_idle_right;
-Atlas atlasPeashooterRunLeft;
-Atlas atlasPeashooterRunRight;
-Atlas atlasPeashooterAttackEXLeft;
-Atlas atlasPeashooterAttackEXRight;
-Atlas atlasPeashooterDieLeft;
-Atlas atlasPeashooterDieRight;
+Atlas atlas_peashooter_run_left;
+Atlas atlas_peashooter_run_right;
+Atlas atlas_peashooter_attack_ex_left;
+Atlas atlas_peashooter_attack_ex_right;
+Atlas atlas_peashooter_die_left;
+Atlas atlas_peashooter_die_right;
 
 Atlas atlas_sunflower_idle_left;
 Atlas atlas_sunflower_idle_right;
-Atlas atlasSunflowerRunLeft;
-Atlas atlasSunflowerRunRight;
-Atlas atlasSunflowerAttackEXLeft;
-Atlas atlasSunflowerAttackEXRight;
-Atlas atlasSunflowerDieLeft;
-Atlas atlasSunflowerDieRight;
+Atlas atlas_sunflower_run_left;
+Atlas atlas_sunflower_run_right;
+Atlas atlas_sunflower_attack_ex_left;
+Atlas atlas_sunflower_attack_ex_right;
+Atlas atlas_sunflower_die_left;
+Atlas atlas_sunflower_die_right;
 
 IMAGE img_pea;
 Atlas atlas_pea_break;
-Atlas atlasSun;
-Atlas atlasSunExplode;
-Atlas atlasSunEX;
-Atlas atlasSunEXExplode;
-Atlas atlasSunText;
+Atlas atlas_sun;
+Atlas atlas_sun_explode;
+Atlas atlas_sun_ex;
+Atlas atlas_sun_ex_explode;
+Atlas atlas_sun_text;
 
-Atlas atlasRunEffect;
-Atlas atlasJumpEffect;
-Atlas atlasLandEffect;
+Atlas atlas_run_effect;
+Atlas atlas_jump_effect;
+Atlas atlas_land_effect;
 
-IMAGE img_1pWinner;
-IMAGE img_2pWinner;
-IMAGE imgWinnerBar;
+IMAGE img_1p_winner;
+IMAGE img_2p_winner;
+IMAGE img_winner_bar;
 
 IMAGE img_avatar_peashooter;
 IMAGE img_avatar_sunflower;
@@ -96,7 +96,7 @@ inline void LoadGameResource()
 {
 	AddFontResourceEx(_T("resources/IPix.ttf"), FR_PRIVATE, NULL);
 
-	loadimage(&imgMenuBackground, _T("resources/menu_background.png"));
+	loadimage(&img_menu_background, _T("resources/menu_background.png"));
 
 	loadimage(&img_vs, _T("resources/VS.png"));
 	loadimage(&img_1p, _T("resources/1P.png"));
@@ -125,42 +125,42 @@ inline void LoadGameResource()
 	loadimage(&img_platform_large, _T("resources/platform_large.png"));
 	loadimage(&img_platform_small, _T("resources/platform_small.png"));
 
-	loadimage(&img_1pCursor, _T("resources/1P_cursor.png"));
-	loadimage(&img_2pCursor, _T("resources/2P_cursor.png"));
+	loadimage(&img_1p_cursor, _T("resources/1P_cursor.png"));
+	loadimage(&img_2p_cursor, _T("resources/2P_cursor.png"));
 
 	atlas_peashooter_idle_right.LoadFromFile(_T("resources/peashooter_idle_%d.png"), 9);
 	FlipAtlas(atlas_peashooter_idle_right, atlas_peashooter_idle_left);
-	atlasPeashooterRunRight.LoadFromFile(_T("resources/peashooter_run_%d.png"), 5);
-	FlipAtlas(atlasPeashooterRunRight, atlasPeashooterRunLeft);
-	atlasPeashooterAttackEXRight.LoadFromFile(_T("resources/peashooter_attack_ex_%d.png"), 3);
-	FlipAtlas(atlasPeashooterAttackEXRight, atlasPeashooterAttackEXLeft);
-	atlasPeashooterDieRight.LoadFromFile(_T("resources/peashooter_die_%d.png"), 4);
-	FlipAtlas(atlasPeashooterDieRight, atlasPeashooterDieLeft);
+	atlas_peashooter_run_right.LoadFromFile(_T("resources/peashooter_run_%d.png"), 5);
+	FlipAtlas(atlas_peashooter_run_right, atlas_peashooter_run_left);
+	atlas_peashooter_attack_ex_right.LoadFromFile(_T("resources/peashooter_attack_ex_%d.png"), 3);
+	FlipAtlas(atlas_peashooter_attack_ex_right, atlas_peashooter_attack_ex_left);
+	atlas_peashooter_die_right.LoadFromFile(_T("resources/peashooter_die_%d.png"), 4);
+	FlipAtlas(atlas_peashooter_die_right, atlas_peashooter_die_left);
 
 	atlas_sunflower_idle_right.LoadFromFile(_T("resources/Sunflower_idle_%d.png"), 8);
 	FlipAtlas(atlas_sunflower_idle_right, atlas_sunflower_idle_left);
-	atlasSunflowerRunRight.LoadFromFile(_T("resources/Sunflower_run_%d.png"), 5);
-	FlipAtlas(atlasSunflowerRunRight, atlasSunflowerRunLeft);
-	atlasSunflowerAttackEXRight.LoadFromFile(_T("resources/Sunflower_attack_ex_%d.png"), 9);
-	FlipAtlas(atlasSunflowerAttackEXRight, atlasSunflowerAttackEXLeft);
-	atlasSunflowerDieRight.LoadFromFile(_T("resources/Sunflower_die_%d.png"), 2);
-	FlipAtlas(atlasSunflowerDieRight, atlasSunflowerDieLeft);
+	atlas_sunflower_run_right.LoadFromFile(_T("resources/Sunflower_run_%d.png"), 5);
+	FlipAtlas(atlas_sunflower_run_right, atlas_sunflower_run_left);
+	atlas_sunflower_attack_ex_right.LoadFromFile(_T("resources/Sunflower_attack_ex_%d.png"), 9);
+	FlipAtlas(atlas_sunflower_attack_ex_right, atlas_sunflower_attack_ex_left);
+	atlas_sunflower_die_right.LoadFromFile(_T("resources/Sunflower_die_%d.png"), 2);
+	FlipAtlas(atlas_sunflower_die_right, atlas_sunflower_die_left);
 
 	loadimage(&img_pea, _T("resources/pea.png"));
 	atlas_pea_break.LoadFromFile(_T("resources/pea_break_%d.png"), 3);
-	atlasSun.LoadFromFile(_T("resources/sun_%d.png"), 5);
-	atlasSunExplode.LoadFromFile(_T("resources/sun_explode_%d.png"), 5);
-	atlasSunEX.LoadFromFile(_T("resources/sun_ex_%d.png"), 5);
-	atlasSunEXExplode.LoadFromFile(_T("resources/sun_ex_explode_%d.png"), 5);
-	atlasSunText.LoadFromFile(_T("resources/sun_text_%d.png"), 6);
+	atlas_sun.LoadFromFile(_T("resources/sun_%d.png"), 5);
+	atlas_sun_explode.LoadFromFile(_T("resources/sun_explode_%d.png"), 5);
+	atlas_sun_ex.LoadFromFile(_T("resources/sun_ex_%d.png"), 5);
+	atlas_sun_ex_explode.LoadFromFile(_T("resources/sun_ex_explode_%d.png"), 5);
+	atlas_sun_text.LoadFromFile(_T("resources/sun_text_%d.png"), 6);
 
-	atlasRunEffect.LoadFromFile(_T("resources/run_effect_%d.png"), 4);
-	atlasJumpEffect.LoadFromFile(_T("resources/jump_effect_%d.png"), 5);
-	atlasLandEffect.LoadFromFile(_T("resources/land_effect_%d.png"), 2);
+	atlas_run_effect.LoadFromFile(_T("resources/run_effect_%d.png"), 4);
+	atlas_jump_effect.LoadFromFile(_T("resources/jump_effect_%d.png"), 5);
+	atlas_land_effect.LoadFromFile(_T("resources/land_effect_%d.png"), 2);
 
-	loadimage(&img_1pWinner, _T("resources/1P_winner.png"));
-	loadimage(&img_2pWinner, _T("resources/2P_winner.png"));
-	loadimage(&imgWinnerBar, _T("resources/winnner_bar.png"));
+	loadimage(&img_1p_winner, _T("resources/1P_winner.png"));
+	loadimage(&img_2p_winner, _T("resources/2P_winner.png"));
+	loadimage(&img_winner_bar, _T("resources/winnner_bar.png"));
 
 	loadimage(&img_avatar_peashooter, _T("resources/avatar_peashooter.png"));
 	loadimage(&img_avatar_sunflower, _T("resources/avatar_sunflower.png"));

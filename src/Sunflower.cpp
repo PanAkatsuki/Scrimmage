@@ -4,11 +4,11 @@ Sunflower::Sunflower()
 {
 	animation_idel_left.SetAtlas(&atlas_sunflower_idle_left);
 	animation_idel_right.SetAtlas(&atlas_sunflower_idle_right);
-	animation_run_left.SetAtlas(&atlas_sunflower_idle_left);
-	animation_run_right.SetAtlas(&atlas_sunflower_idle_right);
-	animation_attack_ex_left.SetAtlas(&atlasSunflowerAttackEXLeft);
-	animation_attack_ex_right.SetAtlas(&atlasSunflowerAttackEXRight);
-	animation_sun_text.SetAtlas(&atlasSunText);
+	animation_run_left.SetAtlas(&atlas_sunflower_run_left);
+	animation_run_right.SetAtlas(&atlas_sunflower_run_right);
+	animation_attack_ex_left.SetAtlas(&atlas_sunflower_attack_ex_left);
+	animation_attack_ex_right.SetAtlas(&atlas_sunflower_attack_ex_right);
+	animation_sun_text.SetAtlas(&atlas_sun_text);
 
 	animation_idel_left.SetInterval(6);
 	animation_idel_right.SetInterval(6);
@@ -126,12 +126,14 @@ void Sunflower::SpawnSunBullet()
 	// Push back bullet
 	bullet_list.push_back(bullet);
 }
+
 void Sunflower::Attack()
 {
 	SpawnSunBullet();
 
 	// Play sound
 }
+
 void Sunflower::SpawnSunBulletEX()
 {
 	// New bullet
@@ -155,7 +157,7 @@ void Sunflower::SpawnSunBulletEX()
 	Vector2 target_position = target_player->GetPosition();
 
 	bullet_position.x = target_position.x + (target_player->GetSize().x - bullet->GetSize().x) / 2;
-	bullet_position.y = target_position.x - bullet->GetSize().y - target_player->GetSize().y;
+	bullet_position.y = target_position.y - bullet->GetSize().y - target_player->GetSize().y;
 	bullet->SetPosition(bullet_position);
 
 	// Set bullet velocity

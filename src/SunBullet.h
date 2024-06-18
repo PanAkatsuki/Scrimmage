@@ -3,8 +3,8 @@
 #include "Bullet.h"
 #include "Animation.h"
 
-extern Atlas atlasSun;
-extern Atlas atlasSunExplode;
+extern Atlas atlas_sun;
+extern Atlas atlas_sun_explode;
 
 extern Camera camera;
 

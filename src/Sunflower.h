@@ -8,11 +8,11 @@
 
 extern Atlas atlas_sunflower_idle_left;
 extern Atlas atlas_sunflower_idle_right;
-extern Atlas atlasSunflowerRunLeft;
-extern Atlas atlasSunflowerRunRight;
-extern Atlas atlasSunflowerAttackEXLeft;
-extern Atlas atlasSunflowerAttackEXRight;
-extern Atlas atlasSunText;
+extern Atlas atlas_sunflower_run_left;
+extern Atlas atlas_sunflower_run_right;
+extern Atlas atlas_sunflower_attack_ex_left;
+extern Atlas atlas_sunflower_attack_ex_right;
+extern Atlas atlas_sun_text;
 
 extern Player* player_1;
 extern Player* player_2;

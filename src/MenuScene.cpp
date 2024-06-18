@@ -22,7 +22,7 @@ void MenuScene::Update(int& delta)
 
 void MenuScene::Draw(Camera& camera)
 {
-	putimage(0, 0, &imgMenuBackground, SRCCOPY);
+	putimage(0, 0, &img_menu_background, SRCCOPY);
 }
 
 void MenuScene::Exit()
