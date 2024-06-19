@@ -16,6 +16,9 @@
 extern std::vector<Platform> platform_list;
 extern std::vector<Bullet*> bullet_list;
 
+extern IMAGE img_1p_cursor;
+extern IMAGE img_2p_cursor;
+
 extern Atlas atlas_run_effect;
 extern Atlas atlas_jump_effect;
 extern Atlas atlas_land_effect;
@@ -72,6 +75,10 @@ protected:
 	const int blink_duration = 2;
 	Timer timer_invulnerable_blink;
 
+	// Last hurt
+	bool is_dead = false;
+	Vector2 last_hurt_direction;
+
 	// Animation
 	Animation* current_animation = nullptr;
 
@@ -81,8 +88,12 @@ protected:
 	const int run_effect_genneration_cd = 10;
 	const int run_effect_genneration_lifespan = 3;
 	Timer timer_die_effect_generation;
-	const int die_effect_genneration_cd = 10;
-	const int die_effect_genneration_lifespan = 2;
+	const int die_effect_genneration_cd = 2;
+	const int die_effect_genneration_lifespan = 5;
+
+	// Cursor
+	bool is_cursor_visible = true;
+	Timer timer_cursor_visible;
 protected:
 	// Gravity
 	int gravity = 1;
@@ -115,6 +126,8 @@ protected:
 	Animation animation_run_right;
 	Animation animation_attack_ex_left;
 	Animation animation_attack_ex_right;
+	Animation animation_die_left;
+	Animation animation_die_right;
 
 	// Jump animation
 	Animation animation_jump_effect;
@@ -131,6 +144,7 @@ public:
 	void SetCharacter(Character chara);
 	void SetSize(int x, int y);
 	void SetPosition(int x, int y);
+	void SetFacingRight(bool is_facing_right);
 	void SetVelocity(int x, int y);
 	void SetHP(int val);
 	void SetMP(int val);
@@ -140,6 +154,7 @@ public:
 	Character GetCharacter() const;
 	Vector2 GetSize() const;
 	Vector2 GetPosition() const;
+	bool GetFacingRight() const;
 	Vector2 GetVelocity() const;
 	int GetHP() const;
 	int GetMP() const;

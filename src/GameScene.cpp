@@ -3,12 +3,14 @@
 // Default
 void GameScene::Enter()
 {
-	img_sky_position.x = (getwidth() - img_sky.getwidth()) / 2;
-	img_sky_position.y = (getheight() - img_sky.getheight()) / 2;
+	// Background position
+	position_img_sky.x = (getwidth() - img_sky.getwidth()) / 2;
+	position_img_sky.y = (getheight() - img_sky.getheight()) / 2;
 
-	img_hills_position.x = (getwidth() - img_hills.getwidth()) / 2;
-	img_hills_position.y = (getheight() - img_hills.getheight()) / 2;
+	position_img_hills.x = (getwidth() - img_hills.getwidth()) / 2;
+	position_img_hills.y = (getheight() - img_hills.getheight()) / 2;
 
+	// Load platform
 	platform_list.resize(4);
 
 	Platform& large_platform = platform_list[0];
@@ -43,6 +45,7 @@ void GameScene::Enter()
 	small_platform_3.shape.left = small_platform_3.render_position.x + 40;
 	small_platform_3.shape.right = small_platform_3.render_position.x + small_platform_3.img->getwidth() - 40;
 
+	// Set player's position
 	player_1->SetPosition(WINDOW_WIDTH / 10 * 2 - CHARACTER_SIZE_X / 2, WINDOW_HEIGHT / 10);
 	player_2->SetPosition(WINDOW_WIDTH / 10 * 8 - CHARACTER_SIZE_X / 2, WINDOW_HEIGHT / 10);
 
@@ -80,6 +83,48 @@ void GameScene::Enter()
 	// Set status bar position
 	status_bar_p1.SetPosition(235, 625);
 	status_bar_p2.SetPosition(675, 625);
+
+	// Set bool
+	is_game_over = false;
+	is_slide_out_started = false;
+
+	// Set winner bar and winner text
+	position_img_winner_bar.x = -img_winner_bar.getwidth();
+	position_img_winner_bar.y = (getheight() - img_winner_bar.getheight()) / 2;
+	position_x_img_winner_bar_dst = (getwidth() - img_winner_bar.getwidth()) / 2;
+	speed_slide_in_bar = (position_x_img_winner_bar_dst - position_img_winner_bar.x) / (time_winner_slide_in / 2);
+
+	position_img_winner_text.x = -img_1p_winner.getwidth();
+	position_img_winner_text.y = (getheight() - img_1p_winner.getheight()) / 2;
+	position_x_img_winner_text_dst = (getwidth() - img_1p_winner.getwidth()) / 2;
+	speed_slide_in_text = (position_x_img_winner_text_dst - position_img_winner_text.x) / (time_winner_slide_in / 2);
+
+	speed_slide_out_bar = (getwidth() - position_x_img_winner_bar_dst) / (time_winner_slide_out);
+	speed_slide_out_text = (getwidth() - position_x_img_winner_text_dst) / (time_winner_slide_out);
+
+	timer_winner_slide_in.Restart();
+	timer_winner_slide_in.SetWaitTime(time_winner_slide_in);
+	timer_winner_slide_in.SetOneShot(true);
+	timer_winner_slide_in.SetCallback(
+		[&]()
+		{
+			is_slide_out_started = true;
+		}
+	);
+
+	timer_winner_slide_out.Restart();
+	timer_winner_slide_out.SetWaitTime(time_winner_slide_out);
+	timer_winner_slide_out.SetOneShot(true);
+	timer_winner_slide_out.SetCallback(
+		[&]()
+		{
+			is_slide_out_started = false;
+			scene_manager.SwitchTo(SceneManager::SceneType::Menu);
+		}
+	);
+
+	// Music
+	mciSendStringW(_T("play bgm_game repeat from 0"), NULL, 0, NULL);
 }
 
 void GameScene::Input(ExMessage& msg)
@@ -132,13 +177,72 @@ void GameScene::Update(int& delta)
 			return deletable;
 		}),
 		bullet_list.end());
+
+	// Check game over
+	if (player_1->GetHP() <= 0 || player_2->GetHP() <= 0)
+	{
+		if (!is_game_over)
+		{
+			mciSendStringW(_T("stop bgm_game"), NULL, 0, NULL);
+			mciSendStringW(_T("play ui_win from 0"), NULL, 0, NULL);
+		}
+
+		is_game_over = true;
+	}
+
+	// Game over update
+	if (is_game_over)
+	{
+		if (!is_slide_out_started)
+		{
+			// Slide in
+			timer_winner_slide_in.Update(delta);
+
+			// Update winner bar and text position
+			if (position_img_winner_bar.x < position_x_img_winner_bar_dst)
+			{
+				position_img_winner_bar.x += speed_slide_in_bar * delta;
+				if (position_img_winner_bar.x >= position_x_img_winner_bar_dst)
+				{
+					position_img_winner_bar.x = position_x_img_winner_bar_dst;
+				}
+			}
+
+			if (position_img_winner_text.x < position_x_img_winner_text_dst)
+			{
+				position_img_winner_text.x += speed_slide_in_text * delta;
+				if (position_img_winner_text.x >= position_x_img_winner_text_dst)
+				{
+					position_img_winner_text.x = position_x_img_winner_text_dst;
+				}
+			}
+		}
+
+		// Slide out
+		if (is_slide_out_started)
+		{
+			timer_winner_slide_out.Update(delta);
+
+			position_img_winner_bar.x += speed_slide_out_bar * delta;
+			if (position_img_winner_bar.x >= getwidth())
+			{
+				position_img_winner_bar.x = getwidth();
+			}
+
+			position_img_winner_text.x += speed_slide_out_text * delta;
+			if (position_img_winner_text.x >= getwidth())
+			{
+				position_img_winner_text.x = getwidth();
+			}
+		}
+	}
 }
 
 void GameScene::Draw(Camera& camera)
 {
 	// Draw background
-	PutImageAlpha(camera, img_sky_position.x, img_sky_position.y, &img_sky);
-	PutImageAlpha(camera, img_hills_position.x, img_hills_position.y, &img_hills);
+	PutImageAlpha(camera, position_img_sky.x, position_img_sky.y, &img_sky);
+	PutImageAlpha(camera, position_img_hills.x, position_img_hills.y, &img_hills);
 
 	// Draw platform
 	for (Platform& platform : platform_list)
@@ -160,6 +264,21 @@ void GameScene::Draw(Camera& camera)
 	status_bar_p1.Draw();
 	status_bar_p2.Draw();
 
+	// Draw game over bar
+	if (is_game_over)
+	{
+		PutImageAlpha(camera, position_img_winner_bar.x, position_img_winner_bar.y, &img_winner_bar);
+
+		if(player_1->GetHP() <= 0)
+		{
+			PutImageAlpha(camera, position_img_winner_text.x, position_img_winner_text.y, &img_2p_winner);
+		}
+		else if (player_2->GetHP() <= 0)
+		{
+			PutImageAlpha(camera, position_img_winner_text.x, position_img_winner_text.y, &img_1p_winner);
+		}
+	}
+
 	// Debug view
 	if (is_debug)
 	{
@@ -170,5 +289,13 @@ void GameScene::Draw(Camera& camera)
 
 void GameScene::Exit()
 {
-	
+	delete player_1;
+	player_1 = nullptr;
+	delete player_2;
+	player_2 = nullptr;
+
+	is_debug = false;
+
+	bullet_list.clear();
+	camera.SetPosition(0, 0);
 }

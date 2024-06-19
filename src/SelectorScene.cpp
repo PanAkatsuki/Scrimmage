@@ -247,6 +247,7 @@ void SelectorScene::Exit()
 		break;
 	}
 	player_1->SetID(PlayerID::P1);
+	player_1->SetFacingRight(true);
 
 	//
 	switch (player_type_2)
@@ -261,6 +262,7 @@ void SelectorScene::Exit()
 		break;
 	}
 	player_2->SetID(PlayerID::P2);
+	player_2->SetFacingRight(false);
 }
 
 void SelectorScene::OuttextxyShaded(int x, int y, LPCTSTR str)

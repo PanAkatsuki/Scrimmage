@@ -13,6 +13,8 @@ extern Atlas atlas_sunflower_run_right;
 extern Atlas atlas_sunflower_attack_ex_left;
 extern Atlas atlas_sunflower_attack_ex_right;
 extern Atlas atlas_sun_text;
+extern Atlas atlas_sunflower_die_left;
+extern Atlas atlas_sunflower_die_right;
 
 extern Player* player_1;
 extern Player* player_2;

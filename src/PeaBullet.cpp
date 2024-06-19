@@ -6,7 +6,7 @@ PeaBullet::PeaBullet()
 	// Bullet Init
 	Vector2 size = { 64, 64 };
 	SetSize(size);
-	SetDamage(1);
+	SetDamage(10);
 
 	// Animation Init
 	animation_break.SetInterval(6);

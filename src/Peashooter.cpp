@@ -18,6 +18,11 @@ Peashooter::Peashooter()
 	animation_attack_ex_left.SetInterval(6);
 	animation_attack_ex_right.SetInterval(6);
 
+	animation_die_left.SetAtlas(&atlas_peashooter_die_left);
+	animation_die_right.SetAtlas(&atlas_peashooter_die_right);
+	animation_die_left.SetInterval(6);
+	animation_die_right.SetInterval(6);
+
 	// Size
 	SetSize(96, 96);
 
@@ -58,6 +63,11 @@ void Peashooter::Update(int& delta)
 
 		timer_attack_ex.Update(delta);
 		timer_spwan_pea_ex.Update(delta);
+	}
+
+	if (is_dead)
+	{
+		current_animation = is_facing_right ? &animation_die_right : &animation_die_left;
 	}
 }
 

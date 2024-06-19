@@ -18,6 +18,12 @@ Sunflower::Sunflower()
 	animation_attack_ex_right.SetInterval(6);
 	animation_sun_text.SetInterval(6);
 
+	animation_die_left.SetAtlas(&atlas_sunflower_die_left);
+	animation_die_right.SetAtlas(&atlas_sunflower_die_right);
+
+	animation_die_left.SetInterval(6);
+	animation_die_right.SetInterval(6);
+
 	animation_attack_ex_left.SetLoop(false);
 	animation_attack_ex_right.SetLoop(false);
 	animation_sun_text.SetLoop(false);
@@ -57,6 +63,11 @@ void Sunflower::Update(int& delta)
 			break;
 		}
 		animation_sun_text.Update(delta);
+	}
+
+	if (is_dead)
+	{
+		current_animation = is_facing_right ? &animation_die_right : &animation_die_left;
 	}
 }
 

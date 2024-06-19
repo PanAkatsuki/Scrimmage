@@ -6,7 +6,7 @@ SunBullet::SunBullet()
 	// Bullet Init
 	Vector2 size = { 96, 96 };
 	SetSize(size);
-	SetDamage(2);
+	SetDamage(15);
 
 	// Animation Init
 	animation_sun.SetInterval(6);

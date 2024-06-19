@@ -107,10 +107,20 @@ Player::Player()
 			particle.SetPosition(particle_position.x, particle_position.y);
 
 			// Set lifespan
-			particle.SetLifespan(2);
+			particle.SetLifespan(die_effect_genneration_lifespan);
 
 			// Emplace back
 			particle_list.emplace_back(particle);
+		}
+	);
+
+	// Cursor
+	timer_cursor_visible.SetWaitTime(180);
+	timer_cursor_visible.SetOneShot(true);
+	timer_cursor_visible.SetCallback(
+		[&]()
+		{
+			is_cursor_visible = false;
 		}
 	);
 }
@@ -257,55 +267,73 @@ void Player::Input(ExMessage& msg)
 
 void Player::Update(int& delta)
 {
-	// Gravity
-	Gravity(delta);
-	
-	// HP
-	if (hp < 0)
+	if (!is_dead)
 	{
-		hp = 0;
+		// Gravity
+		Gravity(delta);
+
+		// HP
+		if (hp < 0)
+		{
+			hp = 0;
+			is_dead = true;
+		}
+
+		// Check out of stage
+		if (position.x + size.x <= 0 || position.x >= getwidth() || position.y + size.y <= 0 || position.y >= getheight())
+		{
+			hp = 0;
+			is_dead = true;
+		}
+
+		// MP
+		if (mp > 100)
+		{
+			mp = 100;
+		}
+
+		// Move
+		Run(delta);
+
+		// Jump
+		Jump();
+
+		// Down
+		Down();
+
+		// Collide
+		Collide();
+
+		// Attack
+		if (!can_attack)
+		{
+			timer_attack_cd.Update(delta);
+		}
+
+		// Attack EX
+		if (is_mp_not_enough)
+		{
+			timer_is_mp_not_enough.Update(delta);
+		}
+
+		// Invulnerable
+		if (is_invulnerable)
+		{
+			timer_invulnerable.Update(delta);
+			timer_invulnerable_blink.Update(delta);
+		}
+
+		if (is_showing_sketch_frame)
+		{
+			SketchImage(current_animation->GetFrame(), &img_sketch);
+		}
 	}
-
-	// MP
-	if (mp > 100)
+	else if (is_dead)
 	{
-		mp = 100;
-	}
-
-	// Move
-	Run(delta);
-
-	// Jump
-	Jump();
-
-	// Down
-	Down();
-
-	// Collide
-	Collide();
-
-	// Attack
-	if(!can_attack)
-	{
-		timer_attack_cd.Update(delta);
-	}
-
-	// Attack EX
-	if (is_mp_not_enough)
-	{
-		timer_is_mp_not_enough.Update(delta);
-	}
-
-	// Invulnerable
-	if (is_invulnerable)
-	{
-		timer_invulnerable.Update(delta);
-		timer_invulnerable_blink.Update(delta);
-	}
-
-	if (is_showing_sketch_frame)
-	{
-		SketchImage(current_animation->GetFrame(), &img_sketch);
+		position.x += velocity.x;
+		is_standing = false;
+		velocity.y += gravity * delta;
+		position.y += velocity.y;
 	}
 
 	// Update animation
@@ -325,6 +353,14 @@ void Player::Update(int& delta)
 
 	// Update run particle
 	timer_run_effect_generation.Update(delta);
+
+	// Update die particle
+	if (is_dead)
+	{
+		timer_die_effect_generation.Update(delta);
+	}
+
+	// Update all particle
 	for (Particle& particle : particle_list)
 	{
 		particle.Update(delta);
@@ -343,6 +379,12 @@ void Player::Update(int& delta)
 			return false;
 		}),
 		particle_list.end());
+
+	// Update cursor
+	if (is_cursor_visible)
+	{
+		timer_cursor_visible.Update(delta);
+	}
 }
 
 void Player::Draw(Camera& camera)
@@ -366,15 +408,31 @@ void Player::Draw(Camera& camera)
 	}
 
 	// Draw player id
-	switch (id)
+	switch (is_cursor_visible)
 	{
-	case PlayerID::P1:
-		settextcolor(RGB(255, 0, 0));
-		outtextxy(position.x + size.x / 3, position.y - 20, _T("1P"));
+	case true:
+		switch (id)
+		{
+		case PlayerID::P1:
+			PutImageAlpha(camera, position.x + (size.x - img_1p_cursor.getwidth()) / 2, position.y - img_1p_cursor.getheight(), &img_1p_cursor);
+			break;
+		case PlayerID::P2:
+			PutImageAlpha(camera, position.x + (size.x - img_2p_cursor.getwidth()) / 2, position.y - img_2p_cursor.getheight(), &img_2p_cursor);
+			break;
+		}
 		break;
-	case PlayerID::P2:
-		settextcolor(RGB(0, 0, 255));
-		outtextxy(position.x + size.x / 3, position.y - 20, _T("2P"));
+	case false:
+		switch (id)
+		{
+		case PlayerID::P1:
+			settextcolor(RGB(255, 255, 0));
+			outtextxy(position.x + size.x / 3, position.y - 20, _T("1P"));
+			break;
+		case PlayerID::P2:
+			settextcolor(RGB(255, 0, 0));
+			outtextxy(position.x + size.x / 3, position.y - 20, _T("2P"));
+			break;
+		}
 		break;
 	}
 
@@ -456,6 +514,11 @@ void Player::SetPosition(int x, int y)
 	this->position.y = y;
 }
 
+void Player::SetFacingRight(bool is_facing_right)
+{
+	this->is_facing_right = is_facing_right;
+}
+
 void Player::SetVelocity(int x, int y)
 {
 	this->velocity.x = x;
@@ -491,6 +554,11 @@ Vector2 Player::GetSize() const
 Vector2 Player::GetPosition() const
 {
 	return this->position;
+}
+
+bool Player::GetFacingRight() const
+{
+	return is_facing_right;
 }
 
 Vector2 Player::GetVelocity() const
@@ -571,7 +639,8 @@ void Player::Run(int delta)
 		is_facing_right = (direction > 0);
 		current_animation = is_facing_right ? &animation_run_right : &animation_run_left;
 		velocity.x = direction * run_speed * delta;
-		timer_run_effect_generation.SetPause(false);
+		//timer_run_effect_generation.SetPause(false);
+		timer_run_effect_generation.SetPause(true);
 	}
 	else
 	{
@@ -648,6 +717,22 @@ void Player::Collide()
 			bullet->Collide();
 			bullet->SetValid(false);
 			hp -= bullet->GetDamage();
+
+			// Die
+			last_hurt_direction.x = bullet->GetPosition().x - position.x;
+			last_hurt_direction.y = bullet->GetPosition().y - position.y;
+			if (hp <= 0)
+			{
+				// Die animation
+				last_hurt_direction.x > 0 ? velocity.x += -10 : velocity.x += 10;
+				velocity.y -= 25;
+
+				// Die bool
+				is_dead = true;
+
+				// Die particle
+				timer_die_effect_generation.Restart();
+			}
 		}
 	}
 }

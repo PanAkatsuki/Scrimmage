@@ -10,6 +10,8 @@ extern Atlas atlas_peashooter_run_left;
 extern Atlas atlas_peashooter_run_right;
 extern Atlas atlas_peashooter_attack_ex_left;
 extern Atlas atlas_peashooter_attack_ex_right;
+extern Atlas atlas_peashooter_die_left;
+extern Atlas atlas_peashooter_die_right;
 
 extern Player* player_1;
 extern Player* player_2;
