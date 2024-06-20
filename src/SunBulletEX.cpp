@@ -5,7 +5,7 @@ SunBulletEX::SunBulletEX()
 	// Bullet Init
 	Vector2 size = { 288, 288 };
 	SetSize(size);
-	SetDamage(3);
+	SetDamage(25);
 
 	// Animation Init
 	animation_sun_ex.SetInterval(6);

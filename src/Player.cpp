@@ -164,6 +164,7 @@ void Player::Input(ExMessage& msg)
 				}
 				else
 				{
+					mciSendStringW(_T("play mp_not_enough from 0"), NULL, 0, NULL);
 					is_mp_not_enough = true;
 					timer_is_mp_not_enough.Restart();
 				}
@@ -203,6 +204,7 @@ void Player::Input(ExMessage& msg)
 				}
 				else
 				{
+					mciSendStringW(_T("play mp_not_enough from 0"), NULL, 0, NULL);
 					is_mp_not_enough = true;
 					timer_is_mp_not_enough.Restart();
 				}
@@ -448,8 +450,16 @@ void Player::Draw(Camera& camera)
 
 	if (is_mp_not_enough)
 	{
-		settextcolor(RGB(255, 255, 255));
-		outtextxy(position.x + 20, position.y - 20, _T("mp"));
+		settextcolor(RGB(0, 0, 255));
+		switch(is_facing_right)
+		{
+		case true:
+			outtextxy(position.x - 40, position.y - 20, _T("mp!"));
+			break;
+		case false:
+			outtextxy(position.x + size.x - 10, position.y - 20, _T("mp!"));
+			break;
+		}
 	}
 
 	if (is_debug)

@@ -182,4 +182,6 @@ inline void LoadGameResource()
 	mciSendStringW(_T("open resources/ui_confirm.wav alias ui_confirm"), NULL, 0, NULL);
 	mciSendStringW(_T("open resources/ui_switch.wav alias ui_switch"), NULL, 0, NULL);
 	mciSendStringW(_T("open resources/ui_win.wav alias ui_win"), NULL, 0, NULL);
+
+	mciSendStringW(_T("open resources/mp_not_enough.mp3 alias mp_not_enough"), NULL, 0, NULL);
 }
